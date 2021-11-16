@@ -534,13 +534,38 @@ void copyStr(char** dest, char* src, bool takeOffBrackets) {
     (*dest)[n] = '\0';
 }
 
-void clearOutput() {
-    output = fopen(mdFileName, "w");
-    fclose(output);
+char* removeFileExt(char* str) {
+    char* resultStr;
+    char* lastExt;
+    if (!str) return NULL;
+
+    if ((resultStr = malloc(strlen(str) + 1)) == NULL)
+        return NULL;
+
+    strcpy(resultStr, str);
+
+    lastExt = strrchr(resultStr, '.');
+
+    if (lastExt)
+        *lastExt = '\0';
+
+    return resultStr;
+}
+
+FILE* getFilePtr(char* inFileName) {
+    outFileName = (char*)malloc(sizeof(char) * strlen(inFileName));
+    strcpy(outFileName, removeFileExt(inFileName));
+    strcat(outFileName, ".md");
+
+    /* Clear file contents */
+    outFilePtr = fopen(outFileName, "w");
+    fclose(outFilePtr);
+
+    return fopen(outFileName, "a");
 }
 
 void appendOutput(char* str) {
-    fputs(str, output);
+    fputs(str, outFilePtr);
 }
 
 struct StackChar* new_node_stack_char(char data) {
@@ -672,24 +697,6 @@ long long int str_to_number(const char* str) {
     return number;
 }
 
-char* removeFileExt(char* str) {
-    char* resultStr;
-    char* lastExt;
-    if (!str) return NULL;
-
-    if ((resultStr = malloc(strlen(str) + 1)) == NULL)
-        return NULL;
-
-    strcpy(resultStr, str);
-
-    lastExt = strrchr(resultStr, '.');
-
-    if (lastExt)
-        *lastExt = '\0';
-
-    return resultStr;
-}
-
 int main(int argc, char** argv) {
     if (argc != 2) {
         printf("1 argument expected, got %d\n", argc);
@@ -703,13 +710,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    mdFileName = (char*)malloc(sizeof(char) * strlen(argv[1]));
-    strcpy(mdFileName, removeFileExt(argv[1]));
-    strcat(mdFileName, ".md");
-
-    clearOutput();
-
-    output = fopen(mdFileName, "a");
+    outFilePtr = getFilePtr(argv[1]);
 
     currChapter = 0;
     currSection = 1;

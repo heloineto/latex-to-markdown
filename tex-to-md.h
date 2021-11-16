@@ -18,8 +18,8 @@ int yylex();
 void yyerror(const char* s);
 int yyparse();
 
-char* mdFileName;
-FILE* output;
+char* outFileName;
+FILE* outFilePtr;
 
 int currChapter;
 int currSection;
