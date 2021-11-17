@@ -4,7 +4,7 @@ void yyerror(char const* s) {
     fprintf(stderr, "%s\n", s);
 }
 
-struct ast* newast(enum NodeType nodeType, struct ast* n1, struct ast* n2, struct ast* n3, struct ast* n4) {
+struct ast* newAST(enum NodeType nodeType, struct ast* n1, struct ast* n2, struct ast* n3, struct ast* n4) {
     struct ast* a = malloc(sizeof(struct ast));
 
     if (!a) {
@@ -21,7 +21,7 @@ struct ast* newast(enum NodeType nodeType, struct ast* n1, struct ast* n2, struc
     return a;
 }
 
-struct ast* newclass(enum NodeType nodeType, char* content1, char* content2) {
+struct ast* newClass(enum NodeType nodeType, char* content1, char* content2) {
     struct StructClass* a = malloc(sizeof(struct StructClass));
 
 
@@ -37,7 +37,7 @@ struct ast* newclass(enum NodeType nodeType, char* content1, char* content2) {
     return ((struct ast*)a);
 }
 
-struct ast* newpackage(enum NodeType nodeType, char* content1, char* content2, struct ast* next) {
+struct ast* newPackage(enum NodeType nodeType, char* content1, char* content2, struct ast* next) {
     struct StructPackage* a = malloc(sizeof(struct StructPackage));
 
     if (!a) {
@@ -53,7 +53,7 @@ struct ast* newpackage(enum NodeType nodeType, char* content1, char* content2, s
     return ((struct ast*)a);
 }
 
-struct ast* newidentification(enum NodeType nodeType, char* title, char* author) {
+struct ast* newIdentification(enum NodeType nodeType, char* title, char* author) {
     struct StructIdentification* a = malloc(sizeof(struct StructIdentification));
 
     if (!a) {
@@ -68,7 +68,7 @@ struct ast* newidentification(enum NodeType nodeType, char* title, char* author)
     return ((struct ast*)a);
 }
 
-struct ast* newtextsubdivision(enum NodeType nodeType, char* content, struct ast* n1, struct ast* n2) {
+struct ast* newTextSubdivision(enum NodeType nodeType, char* content, struct ast* n1, struct ast* n2) {
     struct StructTextSubdivision* a = malloc(sizeof(struct StructTextSubdivision));
 
     if (!a) {
@@ -129,23 +129,23 @@ struct ast* newitens(enum NodeType nodeType, char* content, struct ast* next) {
     return ((struct ast*)a);
 }
 
-void eval(struct ast* a) {
+void evalAST(struct ast* a) {
     if (!a) {
         return;
     }
 
     switch (a->nodeType) {
     case NT_DOCUMENT:
-        eval(a->n1);
-        treefree(a->n1);
-        eval(a->n2);
-        treefree(a->n2);
-        eval(a->n3);
-        treefree(a->n3);
+        evalAST(a->n1);
+        freeAST(a->n1);
+        evalAST(a->n2);
+        freeAST(a->n2);
+        evalAST(a->n3);
+        freeAST(a->n3);
         break;
     case NT_SETTINGS:
-        eval(a->n1);
-        eval(a->n2);
+        evalAST(a->n1);
+        evalAST(a->n2);
         break;
     case NT_CLASS:;
         struct StructClass* class = (struct StructClass*)a;
@@ -209,13 +209,13 @@ void eval(struct ast* a) {
         break;
 
     case NT_MAIN:
-        eval(a->n3); /* eval bodyList */
+        evalAST(a->n3); /* evalAST bodyList */
         break;
 
     case NT_BODYLIST:
-        eval(a->n1);
+        evalAST(a->n1);
         if (a->n2) /* se tem pelo menos o nó 2, tem todos os 4 */
-            eval(a->n2);
+            evalAST(a->n2);
 
         break;
 
@@ -270,7 +270,7 @@ void eval(struct ast* a) {
 
         break;
     case NT_BODY:
-        eval(a->n1);
+        evalAST(a->n1);
         break;
 
     case NT_TEXT:;
@@ -314,7 +314,7 @@ void eval(struct ast* a) {
         break;
 
     case NT_LIST:
-        eval(a->n1);
+        evalAST(a->n1);
 
         break;
 
@@ -353,19 +353,19 @@ void eval(struct ast* a) {
     }
 }
 
-void treefree(struct ast* a) {
+void freeAST(struct ast* a) {
     if (!a)
         return;
 
     switch (a->nodeType) {
     case NT_DOCUMENT:
-        treefree(a->n1);
-        treefree(a->n2);
-        treefree(a->n3);
+        freeAST(a->n1);
+        freeAST(a->n2);
+        freeAST(a->n3);
         break;
     case NT_SETTINGS:
-        treefree(a->n1);
-        treefree(a->n2);
+        freeAST(a->n1);
+        freeAST(a->n2);
         break;
     case NT_CLASS:;
         struct StructClass* class = (struct StructClass*)a;
@@ -392,7 +392,7 @@ void treefree(struct ast* a) {
             package->content2 = NULL;
         }
 
-        eval((struct ast*)package->next);
+        evalAST((struct ast*)package->next);
         package->next = NULL;
 
         break;
@@ -410,9 +410,9 @@ void treefree(struct ast* a) {
 
         break;
     case NT_MAIN:
-        treefree(a->n1);
-        treefree(a->n2);
-        treefree(a->n3);
+        freeAST(a->n1);
+        freeAST(a->n2);
+        freeAST(a->n3);
         break;
     case NT_BEGIN:
         /* sem nós filhos */
@@ -421,10 +421,10 @@ void treefree(struct ast* a) {
         /* sem nós filhos */
         break;
     case NT_BODYLIST:
-        treefree(a->n1);
+        freeAST(a->n1);
 
         if (a->n2)
-            treefree(a->n2);
+            freeAST(a->n2);
 
         break;
     case NT_CHAPTER:;
@@ -437,8 +437,8 @@ void treefree(struct ast* a) {
 
         if (chapter->n1) /* se tiver n1, tem n2 */
         {
-            treefree(chapter->n1);
-            treefree(chapter->n2);
+            freeAST(chapter->n1);
+            freeAST(chapter->n2);
         }
         break;
     case NT_SUBSECTION:;
@@ -449,11 +449,11 @@ void treefree(struct ast* a) {
             subsection->content = NULL;
         }
 
-        treefree(subsection->n1); /* sempre vai ter n1 */
+        freeAST(subsection->n1); /* sempre vai ter n1 */
 
         if (subsection->n2) /* se tiver n1, tem n2 */
         {
-            treefree(subsection->n2);
+            freeAST(subsection->n2);
         }
         break;
     case NT_SECTION:;
@@ -464,16 +464,16 @@ void treefree(struct ast* a) {
             section->content = NULL;
         }
 
-        treefree(section->n1); /* sempre vai ter n1 */
+        freeAST(section->n1); /* sempre vai ter n1 */
 
         if (section->n2) /* se tiver n1, tem n2 */
         {
-            treefree(section->n2);
+            freeAST(section->n2);
         }
         break;
     case NT_BODY:
-        treefree(a->n1);
-        treefree(a->n2);
+        freeAST(a->n1);
+        freeAST(a->n2);
         break;
     case NT_TEXT:;
         struct StructText* text = (struct StructText*)a;
@@ -483,7 +483,7 @@ void treefree(struct ast* a) {
             text->content = NULL;
         }
 
-        treefree((struct ast*)text->next);
+        freeAST((struct ast*)text->next);
         break;
     case NT_TEXTSTYLE:;
         struct StructTextStyle* textStyle = (struct StructTextStyle*)a;
@@ -494,13 +494,13 @@ void treefree(struct ast* a) {
         }
         break;
     case NT_LIST:
-        treefree(a->n1);
+        freeAST(a->n1);
         break;
     case NT_NUMBEREDLIST:
-        treefree(a->n1);
+        freeAST(a->n1);
         break;
     case NT_ITEMLIST:
-        treefree(a->n1);
+        freeAST(a->n1);
         break;
     case NT_ITENS:;
         struct StructItens* itens = (struct StructItens*)a;
@@ -511,7 +511,7 @@ void treefree(struct ast* a) {
         }
 
         if (itens->next) {
-            treefree(itens->next);
+            freeAST(itens->next);
             itens->next = NULL;
         }
         break;

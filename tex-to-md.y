@@ -37,139 +37,139 @@
 %%
 
 documentLatex: settings identification main {
-    $$ = newast(NT_DOCUMENT, $1, $2, $3, NULL);
-    eval($$);
+    $$ = newAST(NT_DOCUMENT, $1, $2, $3, NULL);
+    evalAST($$);
 }
 | settings main {
-    $$ = newast(NT_DOCUMENT, $1, $2, NULL, NULL);
-    eval($$);
+    $$ = newAST(NT_DOCUMENT, $1, $2, NULL, NULL);
+    evalAST($$);
 }
 ;
 
 settings: class package {
-    $$ = newast(NT_SETTINGS, $1, $2, NULL, NULL);
+    $$ = newAST(NT_SETTINGS, $1, $2, NULL, NULL);
 }
 | class {
-    $$ = newast(NT_SETTINGS, $1, NULL, NULL, NULL);
+    $$ = newAST(NT_SETTINGS, $1, NULL, NULL, NULL);
 }
 ;
 
 class: CLASS NAME NAME {
-    $$ = newclass(NT_CLASS, $2, $3);   
+    $$ = newClass(NT_CLASS, $2, $3);   
 }
 ;
 
 package: PACKAGE NAME {
-    $$ = newpackage(NT_PACKAGE, $2, NULL, NULL);  
+    $$ = newPackage(NT_PACKAGE, $2, NULL, NULL);  
 }
 | PACKAGE NAME NAME {
-    $$ = newpackage(NT_PACKAGE, $2, $3, NULL);
+    $$ = newPackage(NT_PACKAGE, $2, $3, NULL);
 } 
 | PACKAGE NAME package {
-    $$ = newpackage(NT_PACKAGE, $2, NULL, $3);
+    $$ = newPackage(NT_PACKAGE, $2, NULL, $3);
 }
 | PACKAGE NAME NAME package {
-    $$ = newpackage(NT_PACKAGE, $2, $3, $4);
+    $$ = newPackage(NT_PACKAGE, $2, $3, $4);
 }
 ;
 
 identification: TITLE CONTENT AUTHOR CONTENT {
-    $$ = newidentification(NT_IDENTIFICATION, $2, $4);
+    $$ = newIdentification(NT_IDENTIFICATION, $2, $4);
 } 
 | TITLE NAME AUTHOR CONTENT {
-    $$ = newidentification(NT_IDENTIFICATION, $2, $4);
+    $$ = newIdentification(NT_IDENTIFICATION, $2, $4);
 }
 | TITLE CONTENT AUTHOR NAME {
-    $$ = newidentification(NT_IDENTIFICATION, $2, $4);
+    $$ = newIdentification(NT_IDENTIFICATION, $2, $4);
 }
 | TITLE NAME AUTHOR NAME {
-    $$ = newidentification(NT_IDENTIFICATION, $2, $4);
+    $$ = newIdentification(NT_IDENTIFICATION, $2, $4);
 }
 | TITLE CONTENT {
-    $$ = newidentification(NT_IDENTIFICATION, $2, NULL);
+    $$ = newIdentification(NT_IDENTIFICATION, $2, NULL);
 } 
 | TITLE NAME {
-    $$ = newidentification(NT_IDENTIFICATION, $2, NULL);
+    $$ = newIdentification(NT_IDENTIFICATION, $2, NULL);
 }
 ;
 
 main: begin end {
-    $$ = newast(NT_MAIN, $1, $2, NULL, NULL);
+    $$ = newAST(NT_MAIN, $1, $2, NULL, NULL);
 }
 | begin bodyList end {
-    $$ = newast(NT_MAIN, $1, $3, $2, NULL);
+    $$ = newAST(NT_MAIN, $1, $3, $2, NULL);
 }
 ;
 
 begin: _BEGIN DOCUMENT {
-    $$ = newast(NT_BEGIN, NULL, NULL, NULL, NULL);
+    $$ = newAST(NT_BEGIN, NULL, NULL, NULL, NULL);
 }
 ;
 
 
 end: _END DOCUMENT {
-    $$ = newast(NT_END, NULL, NULL, NULL, NULL);
+    $$ = newAST(NT_END, NULL, NULL, NULL, NULL);
 }
 ;
 
 bodyList: chapter bodyList {
-    $$ = newast(NT_BODYLIST, $1, $2, NULL, NULL);
+    $$ = newAST(NT_BODYLIST, $1, $2, NULL, NULL);
 }
 | chapter {
-    $$ = newast(NT_BODYLIST, $1, NULL, NULL, NULL);
+    $$ = newAST(NT_BODYLIST, $1, NULL, NULL, NULL);
 }
 | section bodyList {
-    $$ = newast(NT_BODYLIST, $1, $2, NULL, NULL);
+    $$ = newAST(NT_BODYLIST, $1, $2, NULL, NULL);
 }
 | section {
-    $$ = newast(NT_BODYLIST, $1, NULL, NULL, NULL);
+    $$ = newAST(NT_BODYLIST, $1, NULL, NULL, NULL);
 }
 | subsection bodyList {
-    $$ = newast(NT_BODYLIST, $1, $2, NULL, NULL);
+    $$ = newAST(NT_BODYLIST, $1, $2, NULL, NULL);
 }
 | subsection {
-    $$ = newast(NT_BODYLIST, $1, NULL, NULL, NULL);
+    $$ = newAST(NT_BODYLIST, $1, NULL, NULL, NULL);
 }
 | body bodyList {
-    $$ = newast(NT_BODYLIST, $1, $2, NULL, NULL);
+    $$ = newAST(NT_BODYLIST, $1, $2, NULL, NULL);
 }
 | body {
-    $$ = newast(NT_BODYLIST, $1, NULL, NULL, NULL);
+    $$ = newAST(NT_BODYLIST, $1, NULL, NULL, NULL);
 }
 ;
 
 chapter: CHAPTER CONTENT {
-    $$ = newtextsubdivision(NT_CHAPTER, $2, NULL, NULL);
+    $$ = newTextSubdivision(NT_CHAPTER, $2, NULL, NULL);
 }
 | CHAPTER NAME {
-    $$ = newtextsubdivision(NT_CHAPTER, $2, NULL, NULL);
+    $$ = newTextSubdivision(NT_CHAPTER, $2, NULL, NULL);
 }
 ;
 
 section: SECTION CONTENT {
-    $$ = newtextsubdivision(NT_SECTION, $2, NULL, NULL);    
+    $$ = newTextSubdivision(NT_SECTION, $2, NULL, NULL);    
 }
 | SECTION NAME {
-    $$ = newtextsubdivision(NT_SECTION, $2, NULL, NULL);    
+    $$ = newTextSubdivision(NT_SECTION, $2, NULL, NULL);    
 }
 ;
 
 subsection: SUBSECTION CONTENT {
-    $$ = newtextsubdivision(NT_SUBSECTION, $2, NULL, NULL);
+    $$ = newTextSubdivision(NT_SUBSECTION, $2, NULL, NULL);
 } 
 | SUBSECTION NAME {
-    $$ = newtextsubdivision(NT_SUBSECTION, $2, NULL, NULL);
+    $$ = newTextSubdivision(NT_SUBSECTION, $2, NULL, NULL);
 } 
 ;
 
 body: text {
-    $$ = newast(NT_BODY, $1, NULL, NULL, NULL);
+    $$ = newAST(NT_BODY, $1, NULL, NULL, NULL);
 } 
 | textStyle {
-    $$ = newast(NT_BODY, $1, NULL, NULL, NULL);
+    $$ = newAST(NT_BODY, $1, NULL, NULL, NULL);
 } 
 | lists {
-    $$ = newast(NT_BODY, $1, NULL, NULL, NULL);
+    $$ = newAST(NT_BODY, $1, NULL, NULL, NULL);
 }
 ;
 
@@ -210,19 +210,19 @@ textStyle: BF NAME {
 ;
 
 lists: numberedList {
-    $$ = newast(NT_LIST, $1, NULL, NULL, NULL);
+    $$ = newAST(NT_LIST, $1, NULL, NULL, NULL);
 } | itemList {
-    $$ = newast(NT_LIST, $1, NULL, NULL, NULL);
+    $$ = newAST(NT_LIST, $1, NULL, NULL, NULL);
 }
 ;
 
 numberedList: _BEGIN ENUMERATE itens _END ENUMERATE {
-    $$ = newast(NT_NUMBEREDLIST, $3, NULL, NULL, NULL);
+    $$ = newAST(NT_NUMBEREDLIST, $3, NULL, NULL, NULL);
 }
 ;
 
 itemList: _BEGIN ITEMIZE itens _END ITEMIZE {
-    $$ = newast(NT_ITEMLIST, $3, NULL, NULL, NULL);
+    $$ = newAST(NT_ITEMLIST, $3, NULL, NULL, NULL);
 }
 ;
 

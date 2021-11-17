@@ -51,13 +51,13 @@ enum TextStyle {
     TS_UNDERLINE
 };
 
-struct ast {
+typedef struct ast {
     enum NodeType nodeType;
     struct ast* n1;
     struct ast* n2;
     struct ast* n3;
     struct ast* n4;
-};
+} NodeAST;
 
 struct StructClass {
     enum NodeType nodeType;
@@ -103,28 +103,18 @@ struct StructItens {
     struct ast* next;
 };
 
-/* construção de uma ast */
-struct ast* newast(enum NodeType nodeType, struct ast* n1, struct ast* n2, struct ast* n3, struct ast* n4);
-struct ast* newclass(enum NodeType nodeType, char* content1, char* content2);
-struct ast* newpackage(enum NodeType nodeType, char* content1, char* content2, struct ast* next);
-struct ast* newidentification(enum NodeType nodeType, char* n1, char* n2);
-struct ast* newtextsubdivision(enum NodeType nodeType, char* content, struct ast* n1, struct ast* n2);
+//* AST (Abstract Syntax Tree) *//
+struct ast* newAST(enum NodeType nodeType, struct ast* n1, struct ast* n2, struct ast* n3, struct ast* n4);
+struct ast* newClass(enum NodeType nodeType, char* content1, char* content2);
+struct ast* newPackage(enum NodeType nodeType, char* content1, char* content2, struct ast* next);
+struct ast* newIdentification(enum NodeType nodeType, char* n1, char* n2);
+struct ast* newTextSubdivision(enum NodeType nodeType, char* content, struct ast* n1, struct ast* n2);
 struct ast* newtext(enum NodeType nodeType, char* content, struct ast* next);
 struct ast* newtextstyle(enum NodeType nodeType, char* content, enum TextStyle textStyle);
 struct ast* newitens(enum NodeType nodeType, char* content, struct ast* next);
+void evalAST(struct ast*);
+void freeAST(struct ast*);
 
-/* avaliação de uma AST */
-void eval(struct ast*);
-
-/* deletar e liberar uma AST */
-void treefree(struct ast*);
-
-/* cria uma nova string e copia */
-void copyStr(char** dest, char* src, bool takeOffBrackets);
-/* limpa o arquivo da saída do programa */
-void clearOutput();
-/* acrescenta uma string na saída do programa */
-void appendOutput(char* str);
-
-/* funções para conversão número - string */
+//* Utils *//
+void copyStr(char** dest, char* src, bool removeBrackets);
 char* numberToStr(long long int value);
