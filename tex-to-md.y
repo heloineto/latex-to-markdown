@@ -18,7 +18,7 @@
 %token _BEGIN
 %token _END
 %token CLASS
-%token PACKAGE
+%token PACKAGE  
 %token AUTHOR 
 %token TITLE
 %token CHAPTER
