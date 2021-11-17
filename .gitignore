@@ -1,5 +1,6 @@
 /tests
 
-*.tab.c
-*.tab.h
-*.lex.c
+tex-to-md
+tex-to-md.tab.c
+tex-to-md.tab.h
+tex-to-md.lex.c
