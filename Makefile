@@ -1,5 +1,5 @@
-tex-to-md: tex-to-md.l tex-to-md.y tex-to-md.h tex-to-md.c
+tex-to-md: tex-to-md.l tex-to-md.y tex-to-md.h tex-to-md-functions.c
 				bison -d tex-to-md.y
 				flex -o tex-to-md.lex.c tex-to-md.l
-				gcc -o $@ tex-to-md.tab.c tex-to-md.lex.c tex-to-md.c -lm -g
+				gcc -o $@ tex-to-md.tab.c tex-to-md.lex.c tex-to-md-functions.c -lm -g
 				@echo Success: $@ compiled successfully.

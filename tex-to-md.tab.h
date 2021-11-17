@@ -78,7 +78,7 @@ union YYSTYPE
 {
 #line 8 "tex-to-md.y"
    
-    struct ast *a;
+    ASTNode *a;
     char *string;
 
 #line 85 "tex-to-md.tab.h"

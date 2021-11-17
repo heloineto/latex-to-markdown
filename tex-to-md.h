@@ -33,12 +33,12 @@ enum TextStyle {
     TS_UNDERLINE
 };
 
-typedef struct ast {
+typedef struct ASTNode {
     NodeType nodeType;
-    struct ast* n1;
-    struct ast* n2;
-    struct ast* n3;
-    struct ast* n4;
+    struct ASTNode* n1;
+    struct ASTNode* n2;
+    struct ASTNode* n3;
+    struct ASTNode* n4;
 } ASTNode;
 
 typedef struct Class {
@@ -56,7 +56,7 @@ typedef struct Identification {
 typedef struct Itens {
     NodeType nodeType;
     char* content;
-    struct ast* next;
+    struct ASTNode* next;
 } Itens;
 
 typedef struct Package {
@@ -81,21 +81,21 @@ typedef struct StructTextStyle {
 typedef struct TextSubdivision {
     NodeType nodeType;
     char* content;
-    struct ast* n1;
-    struct ast* n2;
+    struct ASTNode* n1;
+    struct ASTNode* n2;
 } TextSubdivision;
 
 //* AST (Abstract Syntax Tree) *//
-struct ast* newAST(NodeType nodeType, struct ast* n1, struct ast* n2, struct ast* n3, struct ast* n4);
-struct ast* newClass(NodeType nodeType, char* content1, char* content2);
-struct ast* newPackage(NodeType nodeType, char* content1, char* content2, struct ast* next);
-struct ast* newIdentification(NodeType nodeType, char* n1, char* n2);
-struct ast* newTextSubdivision(NodeType nodeType, char* content, struct ast* n1, struct ast* n2);
-struct ast* newText(NodeType nodeType, char* content, struct ast* next);
-struct ast* newTextStyle(NodeType nodeType, char* content, enum TextStyle textStyle);
-struct ast* newItems(NodeType nodeType, char* content, struct ast* next);
-void evalAST(struct ast*);
-void freeAST(struct ast*);
+struct ASTNode* newAST(NodeType nodeType, struct ASTNode* n1, struct ASTNode* n2, struct ASTNode* n3, struct ASTNode* n4);
+struct ASTNode* newClass(NodeType nodeType, char* content1, char* content2);
+struct ASTNode* newPackage(NodeType nodeType, char* content1, char* content2, struct ASTNode* next);
+struct ASTNode* newIdentification(NodeType nodeType, char* n1, char* n2);
+struct ASTNode* newTextSubdivision(NodeType nodeType, char* content, struct ASTNode* n1, struct ASTNode* n2);
+struct ASTNode* newText(NodeType nodeType, char* content, struct ASTNode* next);
+struct ASTNode* newTextStyle(NodeType nodeType, char* content, enum TextStyle textStyle);
+struct ASTNode* newItems(NodeType nodeType, char* content, struct ASTNode* next);
+void evalAST(struct ASTNode*);
+void freeAST(struct ASTNode*);
 
 //* Flex definitions *//
 int yylineno;

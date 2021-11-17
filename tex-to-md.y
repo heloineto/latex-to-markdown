@@ -6,14 +6,14 @@
 
 %union
 {   
-    struct ast *a;
+    ASTNode *a;
     char *string;
 };
 
 %token <string> NAME
 %token <string> CONTENT
 %token NUMBER
-// keywords
+
 %token DOCUMENT
 %token _BEGIN
 %token _END
