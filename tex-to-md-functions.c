@@ -551,13 +551,10 @@ char* numberToStr(long long int number) {
 FILE* getFilePtr(char* inFileName) {
   outFileName = (char*)malloc(sizeof(char) * strlen(inFileName));
 
-  printf(inFileName);
-
   /* Change extension (.tex -> .md) */
   strcpy(outFileName, inFileName);
-  char* lastExt = strrchr(inFileName, '.');
+  char* lastExt = strrchr(outFileName, '.');
   if (lastExt) *lastExt = '\0';
-  strcat(outFileName, ".md");
 
   /* Clear file contents */
   outFilePtr = fopen(outFileName, "w");

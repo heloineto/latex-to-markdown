@@ -61,6 +61,6 @@ space   " "
 
 \t|\n|{space} {}
 
-. { printf("Unknown character %c at %d \n", *yytext, yylineno); }
+. {/* printf("Unknown character %c at %d \n", *yytext, yylineno); */ }
 
 %%

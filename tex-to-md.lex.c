@@ -991,7 +991,7 @@ YY_RULE_SETUP
 case 24:
 YY_RULE_SETUP
 #line 64 "tex-to-md.l"
-{ printf("Unknown character %c at %d \n", *yytext, yylineno); }
+{/* printf("Unknown character %c at %d \n", *yytext, yylineno); */ }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
