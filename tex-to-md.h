@@ -6,32 +6,13 @@
 #include <math.h>
 
 typedef enum NodeType {
-    NT_DOCUMENT = 0,
-    NT_SETTINGS,
-    NT_CLASS,
-    NT_PACKAGE,
-    NT_IDENTIFICATION,
-    NT_MAIN,
-    NT_BEGIN,
-    NT_END,
-    NT_BODYLIST,
-    NT_CHAPTER,
-    NT_SUBSECTION,
-    NT_SECTION,
-    NT_BODY,
-    NT_TEXT,
-    NT_TEXTSTYLE,
-    NT_LIST,
-    NT_NUMBEREDLIST,
-    NT_ITEMLIST,
-    NT_ITENS
+    NT_DOCUMENT, NT_SETTINGS, NT_CLASS, NT_PACKAGE, NT_IDENTIFICATION,
+    NT_MAIN, NT_BEGIN, NT_END, NT_BODYLIST, NT_CHAPTER, NT_SUBSECTION,
+    NT_SECTION, NT_BODY, NT_TEXT, NT_TEXTSTYLE, NT_LIST, NT_NUMBEREDLIST,
+    NT_ITEMLIST, NT_ITENS
 } NodeType;
 
-enum TextStyle {
-    TS_BOLD,
-    TS_ITALIC,
-    TS_UNDERLINE
-};
+enum TextStyle { TS_BOLD, TS_ITALIC, TS_UNDERLINE };
 
 typedef struct ASTNode {
     NodeType nodeType;

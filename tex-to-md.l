@@ -14,32 +14,31 @@ space   " "
 
 "%".* /* Ignore comments */
 
-\\author { return AUTHOR; }
+\\author { return AUTHOR; } 
 \\begin { return _BEGIN; }
-\\bf { return BF; } /*bold*/
+\\bf|\\textbf { return BF; }
 \\chapter { return CHAPTER; }
 \\documentclass { return CLASS; }
 \\end { return _END; }
-\\it { return IT; } /*italic*/
-\\par { return PAR;} /* Nparagraph */
+\\it|\\textit { return IT; }
+\\par { return PAR;}
 \\section { return SECTION; }
 \\subsection { return SUBSECTION; }
 \\title { return TITLE; }
 \\underline { return UNDERLINE; }
 \\usepackage { return PACKAGE; }
+\\newline|\\\\ { printf("NEWLINE\n"); return NEWLINE; }
 
 "{"document"}" { return DOCUMENT; }
 "{"enumerate"}" { return ENUMERATE; }
 "{"itemize"}" { return ITEMIZE; }
 
 \\item" "["" "a-zA-Z0-9"\\"\.@\-"<"">""("")"","\''"!""?"";"":"]+ {
-    //! HUMM Make this better
     copyStr(&yylval.string, &yytext[6], false);
     return ITEM;
 }
 
-
-"{"[a-zA-Z0-9"\\"\.@\n\-"<"">""("")"","\''"!""?"";"":"]+"}" {
+("{"|"[")[a-zA-Z0-9"\\"\.@\n\-"<"">""("")"","\''"!""?"";"":"]+("}"|"]") {
     copyStr(&yylval.string, yytext, true);
     return NAME;
 }
@@ -49,18 +48,13 @@ space   " "
     return CONTENT;
 }
 
-"["[a-zA-Z0-9"\\"\.@\n\-"<"">""("")"","\''"!""?"";"":"]+"]" {
-    copyStr(&yylval.string, yytext, true);
-    return NAME;
-}
-
 [a-zA-Z0-9\.@\-"<"">""("")"","\''"!""?"";"":"]+ {
     copyStr(&yylval.string, yytext, false);
     return NAME;
 }
 
-\t|\n|{space} {}
+\t|\n|{space}|\\maketitle|\\maketitle {}
 
-. { printf("Unknown character %c at %d \n", *yytext, yylineno); }
+. { printf("Unknown character %c at line %d \n", *yytext, yylineno); }
 
 %%

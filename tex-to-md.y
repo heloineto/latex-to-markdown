@@ -4,33 +4,16 @@
     #include "tex-to-md.h"
 %}
 
-%union
-{   
+%union {
     ASTNode *a;
     char *string;
 };
 
 %token <string> NAME
 %token <string> CONTENT
-%token NUMBER
-
-%token DOCUMENT
-%token _BEGIN
-%token _END
-%token CLASS
-%token PACKAGE  
-%token AUTHOR 
-%token TITLE
-%token CHAPTER
-%token SECTION
-%token SUBSECTION
-%token PAR 
-%token BF
-%token UNDERLINE
-%token IT
 %token <string> ITEM
-%token ENUMERATE
-%token ITEMIZE
+%token DOCUMENT _BEGIN _END CLASS PACKAGE AUTHOR TITLE CHAPTER SECTION SUBSECTION
+%token PAR BF UNDERLINE IT ENUMERATE ITEMIZE NUMBER NEWLINE
 
 %type <a> documentLatex identification settings class package main begin end bodyList chapter section subsection body text textStyle lists numberedList itemList itens
 
@@ -101,8 +84,10 @@ body: text { $$ = newAST(NT_BODY, $1, NULL, NULL, NULL); }
 
 text: NAME text { $$ = newText(NT_TEXT, $1, $2); }
 | NAME PAR { $$ = newText(NT_TEXT, $1, NULL); }
+| NAME NEWLINE { $$ = newText(NT_TEXT, $1, NULL); }
 | NAME { $$ = newText(NT_TEXT, $1, NULL); }
-| PAR { char *space = (char *) malloc(sizeof(char)); (*space) = ' '; $$ = newText(NT_TEXT, space, NULL); }
+| PAR { $$ = newText(NT_TEXT, " ", NULL); }
+| NEWLINE { $$ = newText(NT_TEXT, "\n", NULL); }
 ;
 
 textStyle: BF NAME { $$ = newTextStyle(NT_TEXTSTYLE, $2, TS_BOLD); } 

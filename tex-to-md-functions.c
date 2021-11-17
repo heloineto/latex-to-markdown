@@ -166,6 +166,7 @@ void evalAST(ASTNode* a) {
 
   case NT_TEXT:;
     Text* txt = (Text*)a;
+
     while (txt != NULL) {
       fputs(txt->content, outFilePtr);
       txt = (Text*)txt->next;
