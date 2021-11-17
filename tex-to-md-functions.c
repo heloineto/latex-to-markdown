@@ -555,6 +555,7 @@ FILE* getFilePtr(char* inFileName) {
   strcpy(outFileName, inFileName);
   char* lastExt = strrchr(outFileName, '.');
   if (lastExt) *lastExt = '\0';
+  strcat(outFileName, ".md");
 
   /* Clear file contents */
   outFilePtr = fopen(outFileName, "w");
