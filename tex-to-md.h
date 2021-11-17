@@ -78,13 +78,6 @@ struct StructIdentification {
     char* author;
 };
 
-struct StructBody {
-    enum NodeType nodeType;
-    char* content;
-    struct ast* n1;
-    struct ast* n2;
-};
-
 struct StructTextSubdivision {
     enum NodeType nodeType;
     char* content;
@@ -109,12 +102,6 @@ struct StructItens {
     char* content;
     struct ast* next;
 };
-
-struct StackChar {
-    char data;
-    struct StackChar* next;
-}
-StackChar;
 
 /* construção de uma ast */
 struct ast* newast(enum NodeType nodeType, struct ast* n1, struct ast* n2, struct ast* n3, struct ast* n4);

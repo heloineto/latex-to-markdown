@@ -546,14 +546,6 @@ FILE* getFilePtr(char* inFileName) {
     return fopen(outFileName, "a");
 }
 
-struct StackChar* new_node_stack_char(char data) {
-    struct StackChar* node = (struct StackChar*)malloc(sizeof(struct StackChar));
-    node->data = data;
-    node->next = NULL;
-
-    return node;
-}
-
 char* numberToStr(long long int number) {
     char* str = (char*)malloc(sizeof(char) * (ceil(log10(number)) + 1));
     sprintf(str, "%llu", number);
