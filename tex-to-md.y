@@ -174,38 +174,38 @@ body: text {
 ;
 
 text: NAME text {
-    $$ = newtext(NT_TEXT, $1, $2);
+    $$ = newText(NT_TEXT, $1, $2);
 }
 | NAME PAR {
-    $$ = newtext(NT_TEXT, $1, NULL);
+    $$ = newText(NT_TEXT, $1, NULL);
 }
 | NAME {
-    $$ = newtext(NT_TEXT, $1, NULL);
+    $$ = newText(NT_TEXT, $1, NULL);
 }
 | PAR {
     char *space = (char *) malloc(sizeof(char));
     (*space) = ' '; 
-    $$ = newtext(NT_TEXT, space, NULL);
+    $$ = newText(NT_TEXT, space, NULL);
 }
 ;
 
 textStyle: BF NAME {
-    $$ = newtextstyle(NT_TEXTSTYLE, $2, TS_BOLD);
+    $$ = newTextStyle(NT_TEXTSTYLE, $2, TS_BOLD);
 } 
 | BF CONTENT {
-    $$ = newtextstyle(NT_TEXTSTYLE, $2, TS_BOLD);
+    $$ = newTextStyle(NT_TEXTSTYLE, $2, TS_BOLD);
 } 
 | UNDERLINE NAME {
-    $$ = newtextstyle(NT_TEXTSTYLE, $2, TS_UNDERLINE);
+    $$ = newTextStyle(NT_TEXTSTYLE, $2, TS_UNDERLINE);
 } 
 | UNDERLINE CONTENT {
-    $$ = newtextstyle(NT_TEXTSTYLE, $2, TS_UNDERLINE);
+    $$ = newTextStyle(NT_TEXTSTYLE, $2, TS_UNDERLINE);
 } 
 | IT NAME {
-    $$ = newtextstyle(NT_TEXTSTYLE, $2, TS_ITALIC);
+    $$ = newTextStyle(NT_TEXTSTYLE, $2, TS_ITALIC);
 }
 | IT CONTENT {
-    $$ = newtextstyle(NT_TEXTSTYLE, $2, TS_ITALIC);
+    $$ = newTextStyle(NT_TEXTSTYLE, $2, TS_ITALIC);
 }
 ;
 
@@ -227,8 +227,8 @@ itemList: _BEGIN ITEMIZE itens _END ITEMIZE {
 ;
 
 itens: ITEM {
-    $$ = newitens(NT_ITENS, $1, NULL);
+    $$ = newItems(NT_ITENS, $1, NULL);
 } | ITEM itens {
-    $$ = newitens(NT_ITENS, $1, $2);
+    $$ = newItems(NT_ITENS, $1, $2);
 }
 ;

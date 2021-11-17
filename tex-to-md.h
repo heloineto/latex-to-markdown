@@ -5,25 +5,7 @@
 #include <stdbool.h>
 #include <math.h>
 
-#define ELEMENT_PADDING "\n\n"
-
-/* interface com o flex */
-
-extern int yylineno; /* do flex */
-extern FILE* yyin; /* do flex */
-
-int yylex();
-void yyerror(const char* s);
-int yyparse();
-
-char* outFileName;
-FILE* outFilePtr;
-
-int currChapter;
-int currSection;
-int currSubSection;
-
-enum NodeType {
+typedef enum NodeType {
     NT_DOCUMENT = 0,
     NT_SETTINGS,
     NT_CLASS,
@@ -43,7 +25,7 @@ enum NodeType {
     NT_NUMBEREDLIST,
     NT_ITEMLIST,
     NT_ITENS
-};
+} NodeType;
 
 enum TextStyle {
     TS_BOLD,
@@ -52,69 +34,81 @@ enum TextStyle {
 };
 
 typedef struct ast {
-    enum NodeType nodeType;
+    NodeType nodeType;
     struct ast* n1;
     struct ast* n2;
     struct ast* n3;
     struct ast* n4;
-} NodeAST;
+} ASTNode;
 
-struct StructClass {
-    enum NodeType nodeType;
+typedef struct Class {
+    NodeType nodeType;
     char* content1;
     char* content2;
-};
+} Class;
 
-struct StructPackage {
-    enum NodeType nodeType;
-    char* content1;
-    char* content2;
-    struct StructPackage* next;
-};
-
-struct StructIdentification {
-    enum NodeType nodeType;
+typedef struct Identification {
+    NodeType nodeType;
     char* title;
     char* author;
-};
+} Identification;
 
-struct StructTextSubdivision {
-    enum NodeType nodeType;
+typedef struct Itens {
+    NodeType nodeType;
+    char* content;
+    struct ast* next;
+} Itens;
+
+typedef struct Package {
+    NodeType nodeType;
+    char* content1;
+    char* content2;
+    struct Package* next;
+} Package;
+
+typedef struct Text {
+    NodeType nodeType;
+    char* content;
+    struct Text* next;
+} Text;
+
+typedef struct StructTextStyle {
+    NodeType nodeType;
+    char* content;
+    enum TextStyle textStyle;
+} TextStyle;
+
+typedef struct TextSubdivision {
+    NodeType nodeType;
     char* content;
     struct ast* n1;
     struct ast* n2;
-};
-
-struct StructText {
-    enum NodeType nodeType;
-    char* content;
-    struct StructText* next;
-};
-
-struct StructTextStyle {
-    enum NodeType nodeType;
-    char* content;
-    enum TextStyle textStyle;
-};
-
-struct StructItens {
-    enum NodeType nodeType;
-    char* content;
-    struct ast* next;
-};
+} TextSubdivision;
 
 //* AST (Abstract Syntax Tree) *//
-struct ast* newAST(enum NodeType nodeType, struct ast* n1, struct ast* n2, struct ast* n3, struct ast* n4);
-struct ast* newClass(enum NodeType nodeType, char* content1, char* content2);
-struct ast* newPackage(enum NodeType nodeType, char* content1, char* content2, struct ast* next);
-struct ast* newIdentification(enum NodeType nodeType, char* n1, char* n2);
-struct ast* newTextSubdivision(enum NodeType nodeType, char* content, struct ast* n1, struct ast* n2);
-struct ast* newtext(enum NodeType nodeType, char* content, struct ast* next);
-struct ast* newtextstyle(enum NodeType nodeType, char* content, enum TextStyle textStyle);
-struct ast* newitens(enum NodeType nodeType, char* content, struct ast* next);
+struct ast* newAST(NodeType nodeType, struct ast* n1, struct ast* n2, struct ast* n3, struct ast* n4);
+struct ast* newClass(NodeType nodeType, char* content1, char* content2);
+struct ast* newPackage(NodeType nodeType, char* content1, char* content2, struct ast* next);
+struct ast* newIdentification(NodeType nodeType, char* n1, char* n2);
+struct ast* newTextSubdivision(NodeType nodeType, char* content, struct ast* n1, struct ast* n2);
+struct ast* newText(NodeType nodeType, char* content, struct ast* next);
+struct ast* newTextStyle(NodeType nodeType, char* content, enum TextStyle textStyle);
+struct ast* newItems(NodeType nodeType, char* content, struct ast* next);
 void evalAST(struct ast*);
 void freeAST(struct ast*);
+
+//* Flex definitions *//
+int yylineno;
+FILE* yyin;
+int yylex();
+void yyerror(const char* s);
+int yyparse();
 
 //* Utils *//
 void copyStr(char** dest, char* src, bool removeBrackets);
 char* numberToStr(long long int value);
+char* outFileName;
+FILE* outFilePtr;
+int currChapter;
+int currSection;
+int currSubSection;
