@@ -1,140 +1,81 @@
-[//]: # "\documentclass[12pt]{article}}"
+%Tudo que começa com '%' é comentário e é ignorado pelo compilador
 
-[//]: # "
-\package[brazil]{babel}
+%Gerando arquivo em latex:
+%latex arquivo.tex (em dvi)
+%pdflatex arquivo (em pdf)
+%dvipdfm arquivo
+%s2pdf arquivo
 
-\package[T1]{fontenc}
+% Alguns modos de usar o latex:
+% Windows – Miktex com Led
+% Linux – texlive com kile
 
-\package[ae]
+\documentclass[12pt]{article} %aqui fala o tipo de documento e o tamanho da fonte. Opções: tamanho do texto (10pt, 12pt, 14pt), formato do papel (a4paper, a5paper, b5paper, letterpaper, legalpaper, executivepaper), o número de colunas (onecolumn, twocolumn), entre outras opções.
+%Por exemplo, [12pt,a4,twocolumn].
+%classe: article, report, letter, book ou slides. Instalar abnt para quem está pensando no tf
+\usepackage[brazil]{babel} %hifenização em português do brasil
+\usepackage[T1]{fontenc} % caracteres com acentos são considerados um bloco só
+\usepackage{ae} %arruma a fonte quando usa o pacote acima
+\usepackage[cp1252]{inputenc} %Encoding do windows, com caracteres acentuados
+\usepackage{amssymb} %alguns caracteres matemáticos especiais
+\usepackage[pdftex]{graphicx}%Para inserir figuras
 
-\package[cp1252]{inputenc}
+\title{Exemplo de \LaTeX} % título
+\author{Viviane Teles de Lucca Maranhao \\ viviane@ime.usp.br} % quem escreveu
 
-\package[amssymb]
-
-\package[pdftex]{graphicx}
-
-}"
-
-[//]: # "
-\package[T1]{fontenc}
-
-\package[ae]
-
-\package[cp1252]{inputenc}
-
-\package[amssymb]
-
-\package[pdftex]{graphicx}
-
-}"
-
-# Exemplo de \LaTeX
-
-	Viviane Teles de Lucca Maranhao \\ viviane@ime.usp.br
-
-
-
-## Paises lusofonos
-
-#### **1.1	Portugal**
-
-
-#### **1.2	Angola**
-
-
-#### **1.3	Macau**
-
-
-fim de paragrafo 
-
-## Palavroes
-
-babana1 selvageria balburdia 
-
-#### **2.1	proibicao dos palavroes no Brasil**
-
-
-Veja no fim do capitulo 
-
-**negro pequeno (negrito)** Los Hermanos 
-
-<ins>rata blanca</ins> *italia*   
-
-##### **2.2.1	seu madruga**
-
-
-##### **2.2.2	chaves**
-
-
+\begin{document} % Aqui começa o documento
+\chapter{Paises lusofonos}
+\section{Portugal}
+\section{Angola}
+\section{Macau}
+fim de paragrafo\par
+\chapter{Palavroes}
+babana1
+selvageria
+balburdia
+\section{proibicao dos palavroes no Brasil}
+Veja no fim do capitulo\par
+\bf{negro pequeno (negrito)} Los Hermanos 
+\underline{rata blanca} \it{italia}\par
+\subsection{seu madruga}
+\subsection{chaves}
 mas soh podia ser o Chaves 
-
-**de novo!**   
-
-## Favelas no Brasil
-
-#### **3.1	o inicio**
-
-
-**ratos invadem australia** rata blanca melhor banda da america latina ?? 
-
-<ins>rata blanca</ins> *italia*   
-
-##### **3.2.1	seu**
-
-
-#### **3.2	pay attention**
-
-
-**cavalo juan** aiaiaiaiaiai 
-
-<ins>rata blanca</ins> *China KKKKKKKKKKKK*   
-
-##### **3.3.1	seu**
-
-
-## nao quero falar com bandeirantes
-
-#### **4.1	pay attention**
-
-
-**negrito** we don't need no education 
-
-<ins>los hermanos</ins> *los polos hermanos*   
-
-##### **4.2.1	seu madruga: eu nAo gosto de ser elogiado em publico !!!!!!!**
-
-
-##### **4.2.2	prof girafa: eu NAO terminei ainda!!!**
-
-
-cringe KKKKKKKKKKKKKKKKKKKKKKK 
-
-## harry potter eh melhor que senhor dozaneis
-
-#### **5.1	pay attention**
-
-
-**neguinho essa frase vai estar** beatles satanico ? entenda o caso 
-
-<ins>rata blanca</ins> *me gusta tu*   
-
-#### **5.2	pay attention**
-
-
-* aranha 
-* macaco
-* macaco aranha
-
-
-1. 1958
-1. 1962
-1. 1970
-1. 1982 (?)
-1. 1994
-1. 2002
-
-
-i have become comfortably numb i have become comfortably numb 
-
-**i have become comfortably numb** i have become comfortably numb 
-
+\bf{de novo!}\par
+\chapter{Favelas no Brasil}
+\section{o inicio}
+\bf{ratos invadem australia} rata blanca melhor banda da america latina ?? 
+\underline{rata blanca} \it{italia}\par
+\subsection{seu}
+\section{pay attention}
+\bf{cavalo juan}  aiaiaiaiaiai 
+\underline{rata blanca} \it{China KKKKKKKKKKKK}\par
+\subsection{seu}
+\chapter{nao quero falar com bandeirantes}
+\section{pay attention}
+\bf{negrito} we don't need no education\par 
+\underline{los hermanos} \it{los polos hermanos}\par
+\subsection{seu madruga: eu nAo gosto de ser elogiado em publico !!!!!!!}
+\subsection{prof girafa: eu NAO terminei ainda!!!}
+cringe KKKKKKKKKKKKKKKKKKKKKKK\par
+\chapter{harry potter eh melhor que senhor dozaneis}
+\section{pay attention}
+\bf{neguinho essa frase vai estar} beatles satanico ? entenda o caso 
+\underline{rata blanca} \it{me gusta tu}\par
+\section{pay attention}
+\begin{itemize} 
+\item aranha 
+\item macaco
+\item macaco aranha
+\end{itemize}
+\begin{enumerate} 
+\item 1958
+\item 1962
+\item 1970
+\item 1982 (?)
+\item 1994
+\item 2002
+\end{enumerate}
+i have become comfortably numb
+i have become comfortably numb \bf{i have become comfortably numb}
+i have become comfortably numb \par
+\end{document}
