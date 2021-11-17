@@ -1,11 +1,9 @@
-#ifndef LATEX_TO_MARKDOWN
-#define LATEX_TO_MARKDOWN
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
 #include <stdbool.h>
+#include <math.h>
 
 #define ELEMENT_PADDING "\n\n"
 
@@ -141,16 +139,5 @@ void clearOutput();
 /* acrescenta uma string na saída do programa */
 void appendOutput(char* str);
 
-/* funções da stack */
-void push_stack_char(struct StackChar** stack, char data); /*Insere no final*/
-char top_stack_char(struct StackChar* stack); /*Retorna o dado do último nó*/
-void pop_stack_char(struct StackChar** stack); /*Remove no fim*/
-void print_stack_char(struct StackChar** stack); /*Printa a stack*/
-bool is_empty_stack_char(struct StackChar* stack); /*Return se está vazia*/
-
 /* funções para conversão número - string */
-char* number_to_str(long long int value);
-long long int str_to_number(const char* str);
-char* get_string(long long unsigned int value, bool isNegative);
-
-#endif
+char* numberToStr(long long int value);

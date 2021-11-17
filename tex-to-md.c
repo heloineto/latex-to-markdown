@@ -150,60 +150,60 @@ void eval(struct ast* a) {
     case NT_CLASS:;
         struct StructClass* class = (struct StructClass*)a;
 
-        appendOutput("[//]: # \""); /* um comentário em Markdown */
+        fputs("[//]: # \"", outFilePtr);
 
-        appendOutput("\\documentclass[");
-        appendOutput(class->content1);
-        appendOutput("]");
+        fputs("\\documentclass[", outFilePtr);
+        fputs(class->content1, outFilePtr);
+        fputs("]", outFilePtr);
 
-        appendOutput("{");
-        appendOutput(class->content2);
-        appendOutput("}");
+        fputs("{", outFilePtr);
+        fputs(class->content2, outFilePtr);
+        fputs("}", outFilePtr);
 
-        appendOutput("}\"");
+        fputs("}\"", outFilePtr);
 
-        appendOutput(ELEMENT_PADDING);
+        fputs(ELEMENT_PADDING, outFilePtr);
 
         break;
     case NT_PACKAGE:;
         struct StructPackage* package = (struct StructPackage*)a;
 
-        appendOutput("[//]: # \"\n"); /* um comentário em Markdown */
+        fputs("[//]: # \"\n", outFilePtr);
 
         while (package != NULL) {
 
-            appendOutput("\\package[");
-            appendOutput(package->content1);
-            appendOutput("]");
+            fputs("\\package[", outFilePtr);
+            fputs(package->content1, outFilePtr);
+            fputs("]", outFilePtr);
 
             if (package->content2) {
-                appendOutput("{");
-                appendOutput(package->content2);
-                appendOutput("}");
+                fputs("{", outFilePtr);
+                fputs(package->content2, outFilePtr);
+                fputs("}", outFilePtr);
             }
-            appendOutput(ELEMENT_PADDING);
+            fputs(ELEMENT_PADDING, outFilePtr);
 
             package = (struct StructPackage*)package->next;
         }
 
-        appendOutput("}\"");
+        fputs("}\"", outFilePtr);
 
-        appendOutput(ELEMENT_PADDING);
+        fputs(ELEMENT_PADDING, outFilePtr);
 
         break;
 
     case NT_IDENTIFICATION:;
         struct StructIdentification* id = (struct StructIdentification*)a;
 
-        appendOutput("# ");
-        appendOutput(id->title);
-        appendOutput(ELEMENT_PADDING);
+        fputs("# ", outFilePtr);
+        fputs(id->title, outFilePtr);
+        fputs(ELEMENT_PADDING, outFilePtr);
 
         if (id->author) {
-            appendOutput("\t");
-            appendOutput(id->author);
-            appendOutput(ELEMENT_PADDING);
-            appendOutput(ELEMENT_PADDING);
+            fputs("\t", outFilePtr);
+            fputs(id->author, outFilePtr);
+            fputs(ELEMENT_PADDING, outFilePtr);
+            fputs(ELEMENT_PADDING, outFilePtr);
         }
 
         break;
@@ -225,10 +225,10 @@ void eval(struct ast* a) {
         currSection = 1;
         currSubSection = 1;
 
-        appendOutput("## ");
-        appendOutput(chap->content);
+        fputs("## ", outFilePtr);
+        fputs(chap->content, outFilePtr);
 
-        appendOutput(ELEMENT_PADDING);
+        fputs(ELEMENT_PADDING, outFilePtr);
 
         currChapter++;
 
@@ -238,15 +238,15 @@ void eval(struct ast* a) {
 
         currSubSection = 1;
 
-        appendOutput("#### **");
-        appendOutput(number_to_str(currChapter));
-        appendOutput(".");
-        appendOutput(number_to_str(currSection));
-        appendOutput("\t");
-        appendOutput(sec->content);
-        appendOutput("**\n");
+        fputs("#### **", outFilePtr);
+        fputs(numberToStr(currChapter), outFilePtr);
+        fputs(".", outFilePtr);
+        fputs(numberToStr(currSection), outFilePtr);
+        fputs("\t", outFilePtr);
+        fputs(sec->content, outFilePtr);
+        fputs("**\n", outFilePtr);
 
-        appendOutput(ELEMENT_PADDING);
+        fputs(ELEMENT_PADDING, outFilePtr);
 
         currSection++;
 
@@ -254,17 +254,17 @@ void eval(struct ast* a) {
     case NT_SUBSECTION:;
         struct StructTextSubdivision* subsec = (struct StructTextSubdivision*)a;
 
-        appendOutput("##### **");
-        appendOutput(number_to_str(currChapter));
-        appendOutput(".");
-        appendOutput(number_to_str(currSection));
-        appendOutput(".");
-        appendOutput(number_to_str(currSubSection));
-        appendOutput("\t");
-        appendOutput(subsec->content);
-        appendOutput("**\n");
+        fputs("##### **", outFilePtr);
+        fputs(numberToStr(currChapter), outFilePtr);
+        fputs(".", outFilePtr);
+        fputs(numberToStr(currSection), outFilePtr);
+        fputs(".", outFilePtr);
+        fputs(numberToStr(currSubSection), outFilePtr);
+        fputs("\t", outFilePtr);
+        fputs(subsec->content, outFilePtr);
+        fputs("**\n", outFilePtr);
 
-        appendOutput(ELEMENT_PADDING);
+        fputs(ELEMENT_PADDING, outFilePtr);
 
         currSubSection++;
 
@@ -276,12 +276,12 @@ void eval(struct ast* a) {
     case NT_TEXT:;
         struct StructText* txt = (struct StructText*)a;
         while (txt != NULL) {
-            appendOutput(txt->content);
+            fputs(txt->content, outFilePtr);
             txt = (struct StructText*)txt->next;
-            appendOutput(" ");
+            fputs(" ", outFilePtr);
         }
 
-        appendOutput(ELEMENT_PADDING);
+        fputs(ELEMENT_PADDING, outFilePtr);
 
         break;
 
@@ -290,22 +290,22 @@ void eval(struct ast* a) {
 
         switch (txtst->textStyle) {
         case TS_BOLD:
-            appendOutput("**");
-            appendOutput(txtst->content);
-            appendOutput("**");
-            appendOutput(" ");
+            fputs("**", outFilePtr);
+            fputs(txtst->content, outFilePtr);
+            fputs("**", outFilePtr);
+            fputs(" ", outFilePtr);
             break;
         case TS_ITALIC:
-            appendOutput("*");
-            appendOutput(txtst->content);
-            appendOutput("*");
-            appendOutput(" ");
+            fputs("*", outFilePtr);
+            fputs(txtst->content, outFilePtr);
+            fputs("*", outFilePtr);
+            fputs(" ", outFilePtr);
             break;
         case TS_UNDERLINE:
-            appendOutput("<ins>");
-            appendOutput(txtst->content);
-            appendOutput("</ins>");
-            appendOutput(" ");
+            fputs("<ins>", outFilePtr);
+            fputs(txtst->content, outFilePtr);
+            fputs("</ins>", outFilePtr);
+            fputs(" ", outFilePtr);
             break;
         default:
             break;
@@ -322,13 +322,13 @@ void eval(struct ast* a) {
         struct StructItens* nlist = ((struct StructItens*)a->n1);
 
         while (nlist != NULL) {
-            appendOutput("1. ");
-            appendOutput(nlist->content);
-            appendOutput("\n");
+            fputs("1. ", outFilePtr);
+            fputs(nlist->content, outFilePtr);
+            fputs("\n", outFilePtr);
             nlist = (struct StructItens*)nlist->next;
         }
 
-        appendOutput(ELEMENT_PADDING);
+        fputs(ELEMENT_PADDING, outFilePtr);
 
         break;
 
@@ -336,13 +336,13 @@ void eval(struct ast* a) {
         struct StructItens* ilist = ((struct StructItens*)a->n1);
 
         while (ilist != NULL) {
-            appendOutput("* ");
-            appendOutput(ilist->content);
-            appendOutput("\n");
+            fputs("* ", outFilePtr);
+            fputs(ilist->content, outFilePtr);
+            fputs("\n", outFilePtr);
             ilist = (struct StructItens*)ilist->next;
         }
 
-        appendOutput(ELEMENT_PADDING);
+        fputs(ELEMENT_PADDING, outFilePtr);
 
         break;
     case NT_ITENS:
@@ -353,7 +353,6 @@ void eval(struct ast* a) {
     }
 }
 
-/* libera uma árvore de AST */
 void treefree(struct ast* a) {
     if (!a)
         return;
@@ -515,46 +514,29 @@ void treefree(struct ast* a) {
             treefree(itens->next);
             itens->next = NULL;
         }
-
         break;
-
-    default:;
-        // printf("erro interno: free bad node\n");
+    default:
+        break;
     }
 
-    if (a)
-        free(a); /* sempre libera o próprio nó */
+    if (a) free(a); /* sempre libera o próprio nó */
 }
 
-void copyStr(char** dest, char* src, bool takeOffBrackets) {
-    const int n = (takeOffBrackets ? (strlen(src) - 2) /* ignoring '{''}' */ : strlen(src));
-    (*dest) = (char*)malloc((sizeof(char) * n) + 1); /* adding 1 for the '\0' */
+void copyStr(char** dest, char* src, bool removeBrackets) {
+    const int n = removeBrackets ? strlen(src) - 2 : strlen(src);
+    *dest = (char*)malloc((sizeof(char) * n) + 1);
 
-    strncpy((*dest), &src[(takeOffBrackets ? 1 : 0)], n);
+    strncpy(*dest, &src[(removeBrackets ? 1 : 0)], n);
     (*dest)[n] = '\0';
-}
-
-char* removeFileExt(char* str) {
-    char* resultStr;
-    char* lastExt;
-    if (!str) return NULL;
-
-    if ((resultStr = malloc(strlen(str) + 1)) == NULL)
-        return NULL;
-
-    strcpy(resultStr, str);
-
-    lastExt = strrchr(resultStr, '.');
-
-    if (lastExt)
-        *lastExt = '\0';
-
-    return resultStr;
 }
 
 FILE* getFilePtr(char* inFileName) {
     outFileName = (char*)malloc(sizeof(char) * strlen(inFileName));
-    strcpy(outFileName, removeFileExt(inFileName));
+
+    /* Change extension (.tex -> .md) */
+    strcpy(outFileName, inFileName);
+    char* lastExt = strrchr(inFileName, '.');
+    if (lastExt) *lastExt = '\0';
     strcat(outFileName, ".md");
 
     /* Clear file contents */
@@ -562,10 +544,6 @@ FILE* getFilePtr(char* inFileName) {
     fclose(outFilePtr);
 
     return fopen(outFileName, "a");
-}
-
-void appendOutput(char* str) {
-    fputs(str, outFilePtr);
 }
 
 struct StackChar* new_node_stack_char(char data) {
@@ -576,125 +554,11 @@ struct StackChar* new_node_stack_char(char data) {
     return node;
 }
 
-void push_stack_char(struct StackChar** stack, char data) {
-    if (stack == NULL)
-        return;
-
-    struct StackChar* node = new_node_stack_char(data);
-
-    if ((*stack) == NULL) {
-        (*stack) = node;
-    }
-    else {
-        struct StackChar* aux = (*stack);
-        (*stack) = node;
-        node->next = aux;
-    }
-}
-
-char top_stack_char(struct StackChar* stack) {
-    if (stack == NULL) {
-        // printf("Can't return top! Stack is empty.\n");
-    }
-    else {
-        return stack->data;
-    }
-}
-
-void pop_stack_char(struct StackChar** stack) {
-    if (stack == NULL || (*stack) == NULL) {
-        // printf("Can't pop! Empty stack.\n");
-        return;
-    }
-
-    struct StackChar* aux = (*stack);
-    (*stack) = (*stack)->next;
-    free(aux);
-    aux = NULL;
-}
-
-bool is_empty_stack_char(struct StackChar* stack) {
-    return (stack == NULL);
-}
-
-void print_stack_char(struct StackChar** stack) {
-    if (stack == NULL || (*stack) == NULL) {
-        // printf("Can't print! Empty stack.\n");
-        return;
-    }
-
-    while ((*stack) != NULL) {
-        printf("%c", top_stack_char(*stack));
-        pop_stack_char(stack);
-    }
-    printf("\n");
-}
-
-char* get_string(long long unsigned int value, bool isNegative) {
-    if (value == 0) {
-        char* zero = (char*)malloc(sizeof(char) * 2);
-        zero[0] = '0';
-        zero[1] = '\0';
-
-        return zero;
-    }
-
-    struct StackChar* strStack = NULL;
-    int strStackSize = (isNegative ? 1 : 0);
-
-    while (value > 0) {
-        int digit = (value % 10);
-
-        char digitChar = (digit + '0');
-        push_stack_char(&strStack, digitChar);
-        value /= 10;
-        strStackSize++;
-    }
-    char* str = (char*)malloc(sizeof(char) * (strStackSize + 1));
-
-    int i = (isNegative ? 1 : 0);
-    if (isNegative) {
-        str[0] = '-';
-    }
-
-    for (i; !is_empty_stack_char(strStack); i++) {
-        str[i] = top_stack_char(strStack);
-        pop_stack_char(&strStack);
-    }
-    const int lastStrPosition = strStackSize;
-    str[lastStrPosition] = '\0'; /*Last position*/
+char* numberToStr(long long int number) {
+    char* str = (char*)malloc(sizeof(char) * (ceil(log10(number)) + 1));
+    sprintf(str, "%llu", number);
 
     return str;
-}
-
-char* number_to_str(long long int value) {
-    bool isNegative = (value < 0);
-
-    if (isNegative) {
-        value *= -1;
-    }
-
-    char* str = get_string(value, isNegative);
-}
-
-long long int str_to_number(const char* str) {
-    long long int number = 0;
-    bool isNegative = (str[0] == '-');
-
-    int strLength = strlen(str);
-    long long unsigned int decimalPlace = 1;
-    const int stopFlag = (isNegative ? 0 : -1);
-    for (int i = strLength - 1; i != stopFlag; i--) {
-        int digit = (str[i] - '0');
-        number += (digit * decimalPlace);
-        decimalPlace *= 10;
-    }
-
-    if (isNegative) {
-        number *= -1;
-    }
-
-    return number;
 }
 
 int main(int argc, char** argv) {
