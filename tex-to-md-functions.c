@@ -1,138 +1,30 @@
 #include "tex-to-md.h"
 
-void yyerror(char const* s) {
-  fprintf(stderr, "%s\n", s);
-}
-
-ASTNode* newAST(NodeType nodeType, ASTNode* n1, ASTNode* n2, ASTNode* n3, ASTNode* n4) {
-  ASTNode* a = malloc(sizeof(ASTNode));
-
-  if (!a) {
-    printf("Error: memory allocation returned NULL pointer\n");
-    exit(0);
+int main(int argc, char** argv) {
+  if (argc != 2) {
+    printf("1 argument expected, got %d\n", argc);
+    return 1;
   }
 
-  a->nodeType = nodeType;
-  a->n1 = n1;
-  a->n2 = n2;
-  a->n3 = n3;
-  a->n4 = n4;
+  yyin = fopen(argv[1], "r");
 
-  return a;
-}
-
-ASTNode* newClass(NodeType nodeType, char* content1, char* content2) {
-  Class* a = malloc(sizeof(Class));
-
-
-  if (!a) {
-    printf("Error: memory allocation returned NULL pointer\n");
-    exit(0);
+  if (!yyin) {
+    printf("Error: failed to read file %s\n", argv[1]);
+    return 1;
   }
 
-  a->nodeType = nodeType;
-  a->content1 = content1;
-  a->content2 = content2;
+  outFilePtr = getFilePtr(argv[1]);
 
-  return ((ASTNode*)a);
+  currChapter = 0;
+  currSection = 1;
+  currSubSection = 1;
+
+  return yyparse();
 }
 
-ASTNode* newPackage(NodeType nodeType, char* content1, char* content2, ASTNode* next) {
-  Package* a = malloc(sizeof(Package));
-
-  if (!a) {
-    printf("Error: memory allocation returned NULL pointer\n");
-    exit(0);
-  }
-
-  a->nodeType = nodeType;
-  a->content1 = content1;
-  a->content2 = content2;
-  a->next = (Package*)next;
-
-  return ((ASTNode*)a);
-}
-
-ASTNode* newIdentification(NodeType nodeType, char* title, char* author) {
-  Identification* a = malloc(sizeof(Identification));
-
-  if (!a) {
-    printf("Error: memory allocation returned NULL pointer\n");
-    exit(0);
-  }
-
-  a->nodeType = nodeType;
-  a->title = title;
-  a->author = author;
-
-  return ((ASTNode*)a);
-}
-
-ASTNode* newTextSubdivision(NodeType nodeType, char* content, ASTNode* n1, ASTNode* n2) {
-  struct TextSubdivision* a = malloc(sizeof(struct TextSubdivision));
-
-  if (!a) {
-    printf("Error: memory allocation returned NULL pointer\n");
-    exit(0);
-  }
-
-  a->nodeType = nodeType;
-  a->content = content;
-  a->n1 = n1;
-  a->n2 = n2;
-
-  return ((ASTNode*)a);
-}
-
-ASTNode* newText(NodeType nodeType, char* content, ASTNode* next) {
-  Text* a = malloc(sizeof(Text));
-
-  if (!a) {
-    printf("Error: memory allocation returned NULL pointer\n");
-    exit(0);
-  }
-
-  a->nodeType = nodeType;
-  a->content = content;
-  a->next = (Text*)next;
-
-  return ((ASTNode*)a);
-}
-
-ASTNode* newTextStyle(NodeType nodeType, char* content, enum TextStyle textStyle) {
-  struct StructTextStyle* a = malloc(sizeof(struct StructTextStyle));
-
-  if (!a) {
-    printf("Error: memory allocation returned NULL pointer\n");
-    exit(0);
-  }
-
-  a->nodeType = nodeType;
-  a->content = content;
-  a->textStyle = textStyle;
-
-  return ((ASTNode*)a);
-}
-
-ASTNode* newItems(NodeType nodeType, char* content, ASTNode* next) {
-  Itens* a = malloc(sizeof(Itens));
-
-  if (!a) {
-    printf("Error: memory allocation returned NULL pointer\n");
-    exit(0);
-  }
-
-  a->nodeType = nodeType;
-  a->content = content;
-  a->next = next;
-
-  return ((ASTNode*)a);
-}
-
+//* AST (Abstract Syntax Tree) *//
 void evalAST(ASTNode* a) {
-  if (!a) {
-    return;
-  }
+  if (!a) return;
 
   switch (a->nodeType) {
   case NT_DOCUMENT:
@@ -245,7 +137,6 @@ void evalAST(ASTNode* a) {
     fputs("\t", outFilePtr);
     fputs(sec->content, outFilePtr);
     fputs("**\n", outFilePtr);
-
     fputs("\n\n", outFilePtr);
 
     currSection++;
@@ -354,8 +245,7 @@ void evalAST(ASTNode* a) {
 }
 
 void freeAST(ASTNode* a) {
-  if (!a)
-    return;
+  if (!a) return;
 
   switch (a->nodeType) {
   case NT_DOCUMENT:
@@ -415,10 +305,8 @@ void freeAST(ASTNode* a) {
     freeAST(a->n3);
     break;
   case NT_BEGIN:
-    /* sem nós filhos */
     break;
   case NT_END:
-    /* sem nós filhos */
     break;
   case NT_BODYLIST:
     freeAST(a->n1);
@@ -435,8 +323,7 @@ void freeAST(ASTNode* a) {
       chapter->content = NULL;
     }
 
-    if (chapter->n1) /* se tiver n1, tem n2 */
-    {
+    if (chapter->n1) {
       freeAST(chapter->n1);
       freeAST(chapter->n2);
     }
@@ -449,10 +336,9 @@ void freeAST(ASTNode* a) {
       subsection->content = NULL;
     }
 
-    freeAST(subsection->n1); /* sempre vai ter n1 */
+    freeAST(subsection->n1);
 
-    if (subsection->n2) /* se tiver n1, tem n2 */
-    {
+    if (subsection->n2) {
       freeAST(subsection->n2);
     }
     break;
@@ -464,10 +350,9 @@ void freeAST(ASTNode* a) {
       section->content = NULL;
     }
 
-    freeAST(section->n1); /* sempre vai ter n1 */
+    freeAST(section->n1);
 
-    if (section->n2) /* se tiver n1, tem n2 */
-    {
+    if (section->n2) {
       freeAST(section->n2);
     }
     break;
@@ -519,9 +404,135 @@ void freeAST(ASTNode* a) {
     break;
   }
 
-  if (a) free(a); /* sempre libera o próprio nó */
+  if (a) free(a);
 }
 
+ASTNode* newAST(NodeType nodeType, ASTNode* n1, ASTNode* n2, ASTNode* n3, ASTNode* n4) {
+  ASTNode* a = malloc(sizeof(ASTNode));
+
+  if (!a) {
+    printf("Error: memory allocation returned NULL pointer\n");
+    exit(0);
+  }
+
+  a->nodeType = nodeType;
+  a->n1 = n1;
+  a->n2 = n2;
+  a->n3 = n3;
+  a->n4 = n4;
+
+  return a;
+}
+
+ASTNode* newClass(NodeType nodeType, char* content1, char* content2) {
+  Class* a = malloc(sizeof(Class));
+
+
+  if (!a) {
+    printf("Error: memory allocation returned NULL pointer\n");
+    exit(0);
+  }
+
+  a->nodeType = nodeType;
+  a->content1 = content1;
+  a->content2 = content2;
+
+  return ((ASTNode*)a);
+}
+
+ASTNode* newIdentification(NodeType nodeType, char* title, char* author) {
+  Identification* a = malloc(sizeof(Identification));
+
+  if (!a) {
+    printf("Error: memory allocation returned NULL pointer\n");
+    exit(0);
+  }
+
+  a->nodeType = nodeType;
+  a->title = title;
+  a->author = author;
+
+  return ((ASTNode*)a);
+}
+
+ASTNode* newItems(NodeType nodeType, char* content, ASTNode* next) {
+  Itens* a = malloc(sizeof(Itens));
+
+  if (!a) {
+    printf("Error: memory allocation returned NULL pointer\n");
+    exit(0);
+  }
+
+  a->nodeType = nodeType;
+  a->content = content;
+  a->next = next;
+
+  return ((ASTNode*)a);
+}
+
+ASTNode* newPackage(NodeType nodeType, char* content1, char* content2, ASTNode* next) {
+  Package* a = malloc(sizeof(Package));
+
+  if (!a) {
+    printf("Error: memory allocation returned NULL pointer\n");
+    exit(0);
+  }
+
+  a->nodeType = nodeType;
+  a->content1 = content1;
+  a->content2 = content2;
+  a->next = (Package*)next;
+
+  return ((ASTNode*)a);
+}
+
+ASTNode* newText(NodeType nodeType, char* content, ASTNode* next) {
+  Text* a = malloc(sizeof(Text));
+
+  if (!a) {
+    printf("Error: memory allocation returned NULL pointer\n");
+    exit(0);
+  }
+
+  a->nodeType = nodeType;
+  a->content = content;
+  a->next = (Text*)next;
+
+  return ((ASTNode*)a);
+}
+
+ASTNode* newTextStyle(NodeType nodeType, char* content, enum TextStyle textStyle) {
+  struct StructTextStyle* a = malloc(sizeof(struct StructTextStyle));
+
+  if (!a) {
+    printf("Error: memory allocation returned NULL pointer\n");
+    exit(0);
+  }
+
+  a->nodeType = nodeType;
+  a->content = content;
+  a->textStyle = textStyle;
+
+  return ((ASTNode*)a);
+}
+
+ASTNode* newTextSubdivision(NodeType nodeType, char* content, ASTNode* n1, ASTNode* n2) {
+  struct TextSubdivision* a = malloc(sizeof(struct TextSubdivision));
+
+  if (!a) {
+    printf("Error: memory allocation returned NULL pointer\n");
+    exit(0);
+  }
+
+  a->nodeType = nodeType;
+  a->content = content;
+  a->n1 = n1;
+  a->n2 = n2;
+
+  return ((ASTNode*)a);
+}
+
+//* Utils *//
 void copyStr(char** dest, char* src, bool removeBrackets) {
   const int n = removeBrackets ? strlen(src) - 2 : strlen(src);
   *dest = (char*)malloc((sizeof(char) * n) + 1);
@@ -530,8 +541,17 @@ void copyStr(char** dest, char* src, bool removeBrackets) {
   (*dest)[n] = '\0';
 }
 
+char* numberToStr(long long int number) {
+  char* str = (char*)malloc(sizeof(char) * (ceil(log10(number)) + 1));
+  sprintf(str, "%llu", number);
+
+  return str;
+}
+
 FILE* getFilePtr(char* inFileName) {
   outFileName = (char*)malloc(sizeof(char) * strlen(inFileName));
+
+  printf(inFileName);
 
   /* Change extension (.tex -> .md) */
   strcpy(outFileName, inFileName);
@@ -546,31 +566,7 @@ FILE* getFilePtr(char* inFileName) {
   return fopen(outFileName, "a");
 }
 
-char* numberToStr(long long int number) {
-  char* str = (char*)malloc(sizeof(char) * (ceil(log10(number)) + 1));
-  sprintf(str, "%llu", number);
-
-  return str;
-}
-
-int main(int argc, char** argv) {
-  if (argc != 2) {
-    printf("1 argument expected, got %d\n", argc);
-    return 1;
-  }
-
-  yyin = fopen(argv[1], "r");
-
-  if (!yyin) {
-    printf("Error: failed to read file %s\n", argv[1]);
-    return 1;
-  }
-
-  outFilePtr = getFilePtr(argv[1]);
-
-  currChapter = 0;
-  currSection = 1;
-  currSubSection = 1;
-
-  return yyparse();
+//* Flex *//
+void yyerror(char const* s) {
+  fprintf(stderr, "%s\n", s);
 }

@@ -56,7 +56,7 @@ typedef struct Identification {
 typedef struct Itens {
     NodeType nodeType;
     char* content;
-    struct ASTNode* next;
+    ASTNode* next;
 } Itens;
 
 typedef struct Package {
@@ -81,23 +81,23 @@ typedef struct StructTextStyle {
 typedef struct TextSubdivision {
     NodeType nodeType;
     char* content;
-    struct ASTNode* n1;
-    struct ASTNode* n2;
+    ASTNode* n1;
+    ASTNode* n2;
 } TextSubdivision;
 
 //* AST (Abstract Syntax Tree) *//
-struct ASTNode* newAST(NodeType nodeType, struct ASTNode* n1, struct ASTNode* n2, struct ASTNode* n3, struct ASTNode* n4);
-struct ASTNode* newClass(NodeType nodeType, char* content1, char* content2);
-struct ASTNode* newPackage(NodeType nodeType, char* content1, char* content2, struct ASTNode* next);
-struct ASTNode* newIdentification(NodeType nodeType, char* n1, char* n2);
-struct ASTNode* newTextSubdivision(NodeType nodeType, char* content, struct ASTNode* n1, struct ASTNode* n2);
-struct ASTNode* newText(NodeType nodeType, char* content, struct ASTNode* next);
-struct ASTNode* newTextStyle(NodeType nodeType, char* content, enum TextStyle textStyle);
-struct ASTNode* newItems(NodeType nodeType, char* content, struct ASTNode* next);
-void evalAST(struct ASTNode*);
-void freeAST(struct ASTNode*);
+void evalAST(ASTNode*);
+void freeAST(ASTNode*);
+ASTNode* newAST(NodeType nodeType, ASTNode* n1, ASTNode* n2, ASTNode* n3, ASTNode* n4);
+ASTNode* newClass(NodeType nodeType, char* content1, char* content2);
+ASTNode* newIdentification(NodeType nodeType, char* n1, char* n2);
+ASTNode* newItems(NodeType nodeType, char* content, ASTNode* next);
+ASTNode* newPackage(NodeType nodeType, char* content1, char* content2, ASTNode* next);
+ASTNode* newText(NodeType nodeType, char* content, ASTNode* next);
+ASTNode* newTextStyle(NodeType nodeType, char* content, enum TextStyle textStyle);
+ASTNode* newTextSubdivision(NodeType nodeType, char* content, ASTNode* n1, ASTNode* n2);
 
-//* Flex definitions *//
+//* Flex *//
 int yylineno;
 FILE* yyin;
 int yylex();
@@ -107,6 +107,7 @@ int yyparse();
 //* Utils *//
 void copyStr(char** dest, char* src, bool removeBrackets);
 char* numberToStr(long long int value);
+FILE* getFilePtr(char* inFileName);
 char* outFileName;
 FILE* outFilePtr;
 int currChapter;

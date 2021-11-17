@@ -527,14 +527,14 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_int8 yyrline[] =
 {
-       0,    39,    39,    43,    49,    52,    57,    62,    65,    68,
-      71,    76,    79,    82,    85,    88,    91,    96,    99,   104,
-     110,   115,   118,   121,   124,   127,   130,   133,   136,   141,
-     144,   149,   152,   157,   160,   165,   168,   171,   176,   179,
-     182,   185,   192,   195,   198,   201,   204,   207,   212,   214,
-     219,   224,   229,   231
+       0,    39,    39,    40,    43,    44,    47,    50,    51,    52,
+      53,    56,    57,    58,    59,    60,    61,    64,    65,    68,
+      72,    75,    76,    77,    78,    79,    80,    81,    82,    85,
+      86,    89,    90,    93,    94,    97,    98,    99,   102,   103,
+     104,   105,   108,   109,   110,   111,   112,   113,   116,   117,
+     120,   123,   126,   127
 };
 #endif
 
@@ -1374,426 +1374,318 @@ yyreduce:
     {
   case 2:
 #line 39 "tex-to-md.y"
-                                            {
-    (yyval.a) = newAST(NT_DOCUMENT, (yyvsp[-2].a), (yyvsp[-1].a), (yyvsp[0].a), NULL);
-    evalAST((yyval.a));
-}
-#line 1382 "tex-to-md.tab.c"
+                                            { (yyval.a) = newAST(NT_DOCUMENT, (yyvsp[-2].a), (yyvsp[-1].a), (yyvsp[0].a), NULL); evalAST((yyval.a)); }
+#line 1379 "tex-to-md.tab.c"
     break;
 
   case 3:
-#line 43 "tex-to-md.y"
-                {
-    (yyval.a) = newAST(NT_DOCUMENT, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL);
-    evalAST((yyval.a));
-}
-#line 1391 "tex-to-md.tab.c"
+#line 40 "tex-to-md.y"
+                { (yyval.a) = newAST(NT_DOCUMENT, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL); evalAST((yyval.a)); }
+#line 1385 "tex-to-md.tab.c"
     break;
 
   case 4:
-#line 49 "tex-to-md.y"
-                        {
-    (yyval.a) = newAST(NT_SETTINGS, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL);
-}
-#line 1399 "tex-to-md.tab.c"
+#line 43 "tex-to-md.y"
+                        { (yyval.a) = newAST(NT_SETTINGS, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL); }
+#line 1391 "tex-to-md.tab.c"
     break;
 
   case 5:
-#line 52 "tex-to-md.y"
-        {
-    (yyval.a) = newAST(NT_SETTINGS, (yyvsp[0].a), NULL, NULL, NULL);
-}
-#line 1407 "tex-to-md.tab.c"
+#line 44 "tex-to-md.y"
+        { (yyval.a) = newAST(NT_SETTINGS, (yyvsp[0].a), NULL, NULL, NULL); }
+#line 1397 "tex-to-md.tab.c"
     break;
 
   case 6:
-#line 57 "tex-to-md.y"
-                       {
-    (yyval.a) = newClass(NT_CLASS, (yyvsp[-1].string), (yyvsp[0].string));   
-}
-#line 1415 "tex-to-md.tab.c"
+#line 47 "tex-to-md.y"
+                       { (yyval.a) = newClass(NT_CLASS, (yyvsp[-1].string), (yyvsp[0].string)); }
+#line 1403 "tex-to-md.tab.c"
     break;
 
   case 7:
-#line 62 "tex-to-md.y"
-                      {
-    (yyval.a) = newPackage(NT_PACKAGE, (yyvsp[0].string), NULL, NULL);  
-}
-#line 1423 "tex-to-md.tab.c"
+#line 50 "tex-to-md.y"
+                      { (yyval.a) = newPackage(NT_PACKAGE, (yyvsp[0].string), NULL, NULL); }
+#line 1409 "tex-to-md.tab.c"
     break;
 
   case 8:
-#line 65 "tex-to-md.y"
-                    {
-    (yyval.a) = newPackage(NT_PACKAGE, (yyvsp[-1].string), (yyvsp[0].string), NULL);
-}
-#line 1431 "tex-to-md.tab.c"
+#line 51 "tex-to-md.y"
+                    { (yyval.a) = newPackage(NT_PACKAGE, (yyvsp[-1].string), (yyvsp[0].string), NULL); }
+#line 1415 "tex-to-md.tab.c"
     break;
 
   case 9:
-#line 68 "tex-to-md.y"
-                       {
-    (yyval.a) = newPackage(NT_PACKAGE, (yyvsp[-1].string), NULL, (yyvsp[0].a));
-}
-#line 1439 "tex-to-md.tab.c"
+#line 52 "tex-to-md.y"
+                       { (yyval.a) = newPackage(NT_PACKAGE, (yyvsp[-1].string), NULL, (yyvsp[0].a)); }
+#line 1421 "tex-to-md.tab.c"
     break;
 
   case 10:
-#line 71 "tex-to-md.y"
-                            {
-    (yyval.a) = newPackage(NT_PACKAGE, (yyvsp[-2].string), (yyvsp[-1].string), (yyvsp[0].a));
-}
-#line 1447 "tex-to-md.tab.c"
+#line 53 "tex-to-md.y"
+                            { (yyval.a) = newPackage(NT_PACKAGE, (yyvsp[-2].string), (yyvsp[-1].string), (yyvsp[0].a)); }
+#line 1427 "tex-to-md.tab.c"
     break;
 
   case 11:
-#line 76 "tex-to-md.y"
-                                             {
-    (yyval.a) = newIdentification(NT_IDENTIFICATION, (yyvsp[-2].string), (yyvsp[0].string));
-}
-#line 1455 "tex-to-md.tab.c"
+#line 56 "tex-to-md.y"
+                                             { (yyval.a) = newIdentification(NT_IDENTIFICATION, (yyvsp[-2].string), (yyvsp[0].string)); }
+#line 1433 "tex-to-md.tab.c"
     break;
 
   case 12:
-#line 79 "tex-to-md.y"
-                            {
-    (yyval.a) = newIdentification(NT_IDENTIFICATION, (yyvsp[-2].string), (yyvsp[0].string));
-}
-#line 1463 "tex-to-md.tab.c"
+#line 57 "tex-to-md.y"
+                            { (yyval.a) = newIdentification(NT_IDENTIFICATION, (yyvsp[-2].string), (yyvsp[0].string)); }
+#line 1439 "tex-to-md.tab.c"
     break;
 
   case 13:
-#line 82 "tex-to-md.y"
-                            {
-    (yyval.a) = newIdentification(NT_IDENTIFICATION, (yyvsp[-2].string), (yyvsp[0].string));
-}
-#line 1471 "tex-to-md.tab.c"
+#line 58 "tex-to-md.y"
+                            { (yyval.a) = newIdentification(NT_IDENTIFICATION, (yyvsp[-2].string), (yyvsp[0].string)); }
+#line 1445 "tex-to-md.tab.c"
     break;
 
   case 14:
-#line 85 "tex-to-md.y"
-                         {
-    (yyval.a) = newIdentification(NT_IDENTIFICATION, (yyvsp[-2].string), (yyvsp[0].string));
-}
-#line 1479 "tex-to-md.tab.c"
+#line 59 "tex-to-md.y"
+                         { (yyval.a) = newIdentification(NT_IDENTIFICATION, (yyvsp[-2].string), (yyvsp[0].string)); }
+#line 1451 "tex-to-md.tab.c"
     break;
 
   case 15:
-#line 88 "tex-to-md.y"
-                {
-    (yyval.a) = newIdentification(NT_IDENTIFICATION, (yyvsp[0].string), NULL);
-}
-#line 1487 "tex-to-md.tab.c"
+#line 60 "tex-to-md.y"
+                { (yyval.a) = newIdentification(NT_IDENTIFICATION, (yyvsp[0].string), NULL); }
+#line 1457 "tex-to-md.tab.c"
     break;
 
   case 16:
-#line 91 "tex-to-md.y"
-             {
-    (yyval.a) = newIdentification(NT_IDENTIFICATION, (yyvsp[0].string), NULL);
-}
-#line 1495 "tex-to-md.tab.c"
+#line 61 "tex-to-md.y"
+             { (yyval.a) = newIdentification(NT_IDENTIFICATION, (yyvsp[0].string), NULL); }
+#line 1463 "tex-to-md.tab.c"
     break;
 
   case 17:
-#line 96 "tex-to-md.y"
-                {
-    (yyval.a) = newAST(NT_MAIN, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL);
-}
-#line 1503 "tex-to-md.tab.c"
+#line 64 "tex-to-md.y"
+                { (yyval.a) = newAST(NT_MAIN, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL); }
+#line 1469 "tex-to-md.tab.c"
     break;
 
   case 18:
-#line 99 "tex-to-md.y"
-                     {
-    (yyval.a) = newAST(NT_MAIN, (yyvsp[-2].a), (yyvsp[0].a), (yyvsp[-1].a), NULL);
-}
-#line 1511 "tex-to-md.tab.c"
+#line 65 "tex-to-md.y"
+                     { (yyval.a) = newAST(NT_MAIN, (yyvsp[-2].a), (yyvsp[0].a), (yyvsp[-1].a), NULL); }
+#line 1475 "tex-to-md.tab.c"
     break;
 
   case 19:
-#line 104 "tex-to-md.y"
-                       {
-    (yyval.a) = newAST(NT_BEGIN, NULL, NULL, NULL, NULL);
-}
-#line 1519 "tex-to-md.tab.c"
+#line 68 "tex-to-md.y"
+                       { (yyval.a) = newAST(NT_BEGIN, NULL, NULL, NULL, NULL); }
+#line 1481 "tex-to-md.tab.c"
     break;
 
   case 20:
-#line 110 "tex-to-md.y"
-                   {
-    (yyval.a) = newAST(NT_END, NULL, NULL, NULL, NULL);
-}
-#line 1527 "tex-to-md.tab.c"
+#line 72 "tex-to-md.y"
+                   { (yyval.a) = newAST(NT_END, NULL, NULL, NULL, NULL); }
+#line 1487 "tex-to-md.tab.c"
     break;
 
   case 21:
-#line 115 "tex-to-md.y"
-                           {
-    (yyval.a) = newAST(NT_BODYLIST, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL);
-}
-#line 1535 "tex-to-md.tab.c"
+#line 75 "tex-to-md.y"
+                           { (yyval.a) = newAST(NT_BODYLIST, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL); }
+#line 1493 "tex-to-md.tab.c"
     break;
 
   case 22:
-#line 118 "tex-to-md.y"
-          {
-    (yyval.a) = newAST(NT_BODYLIST, (yyvsp[0].a), NULL, NULL, NULL);
-}
-#line 1543 "tex-to-md.tab.c"
+#line 76 "tex-to-md.y"
+          { (yyval.a) = newAST(NT_BODYLIST, (yyvsp[0].a), NULL, NULL, NULL); }
+#line 1499 "tex-to-md.tab.c"
     break;
 
   case 23:
-#line 121 "tex-to-md.y"
-                   {
-    (yyval.a) = newAST(NT_BODYLIST, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL);
-}
-#line 1551 "tex-to-md.tab.c"
+#line 77 "tex-to-md.y"
+                   { (yyval.a) = newAST(NT_BODYLIST, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL); }
+#line 1505 "tex-to-md.tab.c"
     break;
 
   case 24:
-#line 124 "tex-to-md.y"
-          {
-    (yyval.a) = newAST(NT_BODYLIST, (yyvsp[0].a), NULL, NULL, NULL);
-}
-#line 1559 "tex-to-md.tab.c"
+#line 78 "tex-to-md.y"
+          { (yyval.a) = newAST(NT_BODYLIST, (yyvsp[0].a), NULL, NULL, NULL); }
+#line 1511 "tex-to-md.tab.c"
     break;
 
   case 25:
-#line 127 "tex-to-md.y"
-                      {
-    (yyval.a) = newAST(NT_BODYLIST, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL);
-}
-#line 1567 "tex-to-md.tab.c"
+#line 79 "tex-to-md.y"
+                      { (yyval.a) = newAST(NT_BODYLIST, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL); }
+#line 1517 "tex-to-md.tab.c"
     break;
 
   case 26:
-#line 130 "tex-to-md.y"
-             {
-    (yyval.a) = newAST(NT_BODYLIST, (yyvsp[0].a), NULL, NULL, NULL);
-}
-#line 1575 "tex-to-md.tab.c"
+#line 80 "tex-to-md.y"
+             { (yyval.a) = newAST(NT_BODYLIST, (yyvsp[0].a), NULL, NULL, NULL); }
+#line 1523 "tex-to-md.tab.c"
     break;
 
   case 27:
-#line 133 "tex-to-md.y"
-                {
-    (yyval.a) = newAST(NT_BODYLIST, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL);
-}
-#line 1583 "tex-to-md.tab.c"
+#line 81 "tex-to-md.y"
+                { (yyval.a) = newAST(NT_BODYLIST, (yyvsp[-1].a), (yyvsp[0].a), NULL, NULL); }
+#line 1529 "tex-to-md.tab.c"
     break;
 
   case 28:
-#line 136 "tex-to-md.y"
-       {
-    (yyval.a) = newAST(NT_BODYLIST, (yyvsp[0].a), NULL, NULL, NULL);
-}
-#line 1591 "tex-to-md.tab.c"
+#line 82 "tex-to-md.y"
+       { (yyval.a) = newAST(NT_BODYLIST, (yyvsp[0].a), NULL, NULL, NULL); }
+#line 1535 "tex-to-md.tab.c"
     break;
 
   case 29:
-#line 141 "tex-to-md.y"
-                         {
-    (yyval.a) = newTextSubdivision(NT_CHAPTER, (yyvsp[0].string), NULL, NULL);
-}
-#line 1599 "tex-to-md.tab.c"
+#line 85 "tex-to-md.y"
+                         { (yyval.a) = newTextSubdivision(NT_CHAPTER, (yyvsp[0].string), NULL, NULL); }
+#line 1541 "tex-to-md.tab.c"
     break;
 
   case 30:
-#line 144 "tex-to-md.y"
-               {
-    (yyval.a) = newTextSubdivision(NT_CHAPTER, (yyvsp[0].string), NULL, NULL);
-}
-#line 1607 "tex-to-md.tab.c"
+#line 86 "tex-to-md.y"
+               { (yyval.a) = newTextSubdivision(NT_CHAPTER, (yyvsp[0].string), NULL, NULL); }
+#line 1547 "tex-to-md.tab.c"
     break;
 
   case 31:
-#line 149 "tex-to-md.y"
-                         {
-    (yyval.a) = newTextSubdivision(NT_SECTION, (yyvsp[0].string), NULL, NULL);    
-}
-#line 1615 "tex-to-md.tab.c"
+#line 89 "tex-to-md.y"
+                         { (yyval.a) = newTextSubdivision(NT_SECTION, (yyvsp[0].string), NULL, NULL); }
+#line 1553 "tex-to-md.tab.c"
     break;
 
   case 32:
-#line 152 "tex-to-md.y"
-               {
-    (yyval.a) = newTextSubdivision(NT_SECTION, (yyvsp[0].string), NULL, NULL);    
-}
-#line 1623 "tex-to-md.tab.c"
+#line 90 "tex-to-md.y"
+               { (yyval.a) = newTextSubdivision(NT_SECTION, (yyvsp[0].string), NULL, NULL); }
+#line 1559 "tex-to-md.tab.c"
     break;
 
   case 33:
-#line 157 "tex-to-md.y"
-                               {
-    (yyval.a) = newTextSubdivision(NT_SUBSECTION, (yyvsp[0].string), NULL, NULL);
-}
-#line 1631 "tex-to-md.tab.c"
+#line 93 "tex-to-md.y"
+                               { (yyval.a) = newTextSubdivision(NT_SUBSECTION, (yyvsp[0].string), NULL, NULL); }
+#line 1565 "tex-to-md.tab.c"
     break;
 
   case 34:
-#line 160 "tex-to-md.y"
-                  {
-    (yyval.a) = newTextSubdivision(NT_SUBSECTION, (yyvsp[0].string), NULL, NULL);
-}
-#line 1639 "tex-to-md.tab.c"
+#line 94 "tex-to-md.y"
+                  { (yyval.a) = newTextSubdivision(NT_SUBSECTION, (yyvsp[0].string), NULL, NULL);}
+#line 1571 "tex-to-md.tab.c"
     break;
 
   case 35:
-#line 165 "tex-to-md.y"
-           {
-    (yyval.a) = newAST(NT_BODY, (yyvsp[0].a), NULL, NULL, NULL);
-}
-#line 1647 "tex-to-md.tab.c"
+#line 97 "tex-to-md.y"
+           { (yyval.a) = newAST(NT_BODY, (yyvsp[0].a), NULL, NULL, NULL); }
+#line 1577 "tex-to-md.tab.c"
     break;
 
   case 36:
-#line 168 "tex-to-md.y"
-            {
-    (yyval.a) = newAST(NT_BODY, (yyvsp[0].a), NULL, NULL, NULL);
-}
-#line 1655 "tex-to-md.tab.c"
+#line 98 "tex-to-md.y"
+            { (yyval.a) = newAST(NT_BODY, (yyvsp[0].a), NULL, NULL, NULL); }
+#line 1583 "tex-to-md.tab.c"
     break;
 
   case 37:
-#line 171 "tex-to-md.y"
-        {
-    (yyval.a) = newAST(NT_BODY, (yyvsp[0].a), NULL, NULL, NULL);
-}
-#line 1663 "tex-to-md.tab.c"
+#line 99 "tex-to-md.y"
+        { (yyval.a) = newAST(NT_BODY, (yyvsp[0].a), NULL, NULL, NULL); }
+#line 1589 "tex-to-md.tab.c"
     break;
 
   case 38:
-#line 176 "tex-to-md.y"
-                {
-    (yyval.a) = newText(NT_TEXT, (yyvsp[-1].string), (yyvsp[0].a));
-}
-#line 1671 "tex-to-md.tab.c"
+#line 102 "tex-to-md.y"
+                { (yyval.a) = newText(NT_TEXT, (yyvsp[-1].string), (yyvsp[0].a)); }
+#line 1595 "tex-to-md.tab.c"
     break;
 
   case 39:
-#line 179 "tex-to-md.y"
-           {
-    (yyval.a) = newText(NT_TEXT, (yyvsp[-1].string), NULL);
-}
-#line 1679 "tex-to-md.tab.c"
+#line 103 "tex-to-md.y"
+           { (yyval.a) = newText(NT_TEXT, (yyvsp[-1].string), NULL); }
+#line 1601 "tex-to-md.tab.c"
     break;
 
   case 40:
-#line 182 "tex-to-md.y"
-       {
-    (yyval.a) = newText(NT_TEXT, (yyvsp[0].string), NULL);
-}
-#line 1687 "tex-to-md.tab.c"
+#line 104 "tex-to-md.y"
+       { (yyval.a) = newText(NT_TEXT, (yyvsp[0].string), NULL); }
+#line 1607 "tex-to-md.tab.c"
     break;
 
   case 41:
-#line 185 "tex-to-md.y"
-      {
-    char *space = (char *) malloc(sizeof(char));
-    (*space) = ' '; 
-    (yyval.a) = newText(NT_TEXT, space, NULL);
-}
-#line 1697 "tex-to-md.tab.c"
+#line 105 "tex-to-md.y"
+      { char *space = (char *) malloc(sizeof(char)); (*space) = ' '; (yyval.a) = newText(NT_TEXT, space, NULL); }
+#line 1613 "tex-to-md.tab.c"
     break;
 
   case 42:
-#line 192 "tex-to-md.y"
-                   {
-    (yyval.a) = newTextStyle(NT_TEXTSTYLE, (yyvsp[0].string), TS_BOLD);
-}
-#line 1705 "tex-to-md.tab.c"
+#line 108 "tex-to-md.y"
+                   { (yyval.a) = newTextStyle(NT_TEXTSTYLE, (yyvsp[0].string), TS_BOLD); }
+#line 1619 "tex-to-md.tab.c"
     break;
 
   case 43:
-#line 195 "tex-to-md.y"
-             {
-    (yyval.a) = newTextStyle(NT_TEXTSTYLE, (yyvsp[0].string), TS_BOLD);
-}
-#line 1713 "tex-to-md.tab.c"
+#line 109 "tex-to-md.y"
+             { (yyval.a) = newTextStyle(NT_TEXTSTYLE, (yyvsp[0].string), TS_BOLD); }
+#line 1625 "tex-to-md.tab.c"
     break;
 
   case 44:
-#line 198 "tex-to-md.y"
-                 {
-    (yyval.a) = newTextStyle(NT_TEXTSTYLE, (yyvsp[0].string), TS_UNDERLINE);
-}
-#line 1721 "tex-to-md.tab.c"
+#line 110 "tex-to-md.y"
+                 { (yyval.a) = newTextStyle(NT_TEXTSTYLE, (yyvsp[0].string), TS_UNDERLINE); }
+#line 1631 "tex-to-md.tab.c"
     break;
 
   case 45:
-#line 201 "tex-to-md.y"
-                    {
-    (yyval.a) = newTextStyle(NT_TEXTSTYLE, (yyvsp[0].string), TS_UNDERLINE);
-}
-#line 1729 "tex-to-md.tab.c"
+#line 111 "tex-to-md.y"
+                    { (yyval.a) = newTextStyle(NT_TEXTSTYLE, (yyvsp[0].string), TS_UNDERLINE); }
+#line 1637 "tex-to-md.tab.c"
     break;
 
   case 46:
-#line 204 "tex-to-md.y"
-          {
-    (yyval.a) = newTextStyle(NT_TEXTSTYLE, (yyvsp[0].string), TS_ITALIC);
-}
-#line 1737 "tex-to-md.tab.c"
+#line 112 "tex-to-md.y"
+          { (yyval.a) = newTextStyle(NT_TEXTSTYLE, (yyvsp[0].string), TS_ITALIC); }
+#line 1643 "tex-to-md.tab.c"
     break;
 
   case 47:
-#line 207 "tex-to-md.y"
-             {
-    (yyval.a) = newTextStyle(NT_TEXTSTYLE, (yyvsp[0].string), TS_ITALIC);
-}
-#line 1745 "tex-to-md.tab.c"
+#line 113 "tex-to-md.y"
+             { (yyval.a) = newTextStyle(NT_TEXTSTYLE, (yyvsp[0].string), TS_ITALIC); }
+#line 1649 "tex-to-md.tab.c"
     break;
 
   case 48:
-#line 212 "tex-to-md.y"
-                    {
-    (yyval.a) = newAST(NT_LIST, (yyvsp[0].a), NULL, NULL, NULL);
-}
-#line 1753 "tex-to-md.tab.c"
+#line 116 "tex-to-md.y"
+                    { (yyval.a) = newAST(NT_LIST, (yyvsp[0].a), NULL, NULL, NULL); }
+#line 1655 "tex-to-md.tab.c"
     break;
 
   case 49:
-#line 214 "tex-to-md.y"
-             {
-    (yyval.a) = newAST(NT_LIST, (yyvsp[0].a), NULL, NULL, NULL);
-}
-#line 1761 "tex-to-md.tab.c"
+#line 117 "tex-to-md.y"
+           { (yyval.a) = newAST(NT_LIST, (yyvsp[0].a), NULL, NULL, NULL); }
+#line 1661 "tex-to-md.tab.c"
     break;
 
   case 50:
-#line 219 "tex-to-md.y"
-                                                    {
-    (yyval.a) = newAST(NT_NUMBEREDLIST, (yyvsp[-2].a), NULL, NULL, NULL);
-}
-#line 1769 "tex-to-md.tab.c"
+#line 120 "tex-to-md.y"
+                                                    { (yyval.a) = newAST(NT_NUMBEREDLIST, (yyvsp[-2].a), NULL, NULL, NULL); }
+#line 1667 "tex-to-md.tab.c"
     break;
 
   case 51:
-#line 224 "tex-to-md.y"
-                                            {
-    (yyval.a) = newAST(NT_ITEMLIST, (yyvsp[-2].a), NULL, NULL, NULL);
-}
-#line 1777 "tex-to-md.tab.c"
+#line 123 "tex-to-md.y"
+                                            { (yyval.a) = newAST(NT_ITEMLIST, (yyvsp[-2].a), NULL, NULL, NULL); }
+#line 1673 "tex-to-md.tab.c"
     break;
 
   case 52:
-#line 229 "tex-to-md.y"
-            {
-    (yyval.a) = newItems(NT_ITENS, (yyvsp[0].string), NULL);
-}
-#line 1785 "tex-to-md.tab.c"
+#line 126 "tex-to-md.y"
+            { (yyval.a) = newItems(NT_ITENS, (yyvsp[0].string), NULL); }
+#line 1679 "tex-to-md.tab.c"
     break;
 
   case 53:
-#line 231 "tex-to-md.y"
-               {
-    (yyval.a) = newItems(NT_ITENS, (yyvsp[-1].string), (yyvsp[0].a));
-}
-#line 1793 "tex-to-md.tab.c"
+#line 127 "tex-to-md.y"
+             { (yyval.a) = newItems(NT_ITENS, (yyvsp[-1].string), (yyvsp[0].a));}
+#line 1685 "tex-to-md.tab.c"
     break;
 
 
-#line 1797 "tex-to-md.tab.c"
+#line 1689 "tex-to-md.tab.c"
 
       default: break;
     }

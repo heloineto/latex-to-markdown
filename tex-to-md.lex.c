@@ -388,17 +388,17 @@ static const flex_int16_t yy_accept[131] =
         0,    0,   26,   24,   23,   23,   22,    1,   24,   24,
        24,   22,    1,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,   21,
-        0,    0,   13,    0,    0,    0,   15,    0,    0,    0,
+        0,    0,    4,    0,    0,    0,    8,    0,    0,    0,
         0,    0,    0,   19,   20,    0,    0,    0,    0,    0,
-        0,    0,    3,    0,   12,    0,    0,    0,    0,    0,
+        0,    0,    7,    0,    9,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,    0,    0,    2,    0,    0,
-        0,    0,    0,    7,    0,    0,    0,    0,    0,    8,
-        0,    0,   16,    0,    0,    0,    0,    0,    0,    0,
+        0,    0,    0,    0,    0,    0,    0,    3,    0,    0,
+        0,    0,    0,   12,    0,    0,    0,    0,    0,    2,
+        0,    0,   18,    0,    0,    0,    0,    0,    0,    0,
 
-        9,    0,   10,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,   18,    0,    0,   14,    0,
-        4,    0,    0,   11,    6,   17,    0,    0,    5,    0
+        5,    0,   10,    0,    0,    0,    0,    0,    0,    0,
+        0,    0,    0,    0,    0,   17,    0,    0,   13,    0,
+       15,    0,    0,   11,   14,   16,    0,    0,    6,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -861,128 +861,96 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 17 "tex-to-md.l"
-{
-    return _BEGIN;
-}
+{ return AUTHOR; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 21 "tex-to-md.l"
-{
-    return _END;
-}
+#line 18 "tex-to-md.l"
+{ return _BEGIN; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 25 "tex-to-md.l"
-{
-    return DOCUMENT;
-}
+#line 19 "tex-to-md.l"
+{ return BF; } /*bold*/
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 29 "tex-to-md.l"
-{
-    return CLASS;
-}
+#line 20 "tex-to-md.l"
+{ return CHAPTER; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 33 "tex-to-md.l"
-{
-    return PACKAGE;
-}
+#line 21 "tex-to-md.l"
+{ return CLASS; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 37 "tex-to-md.l"
-{
-    return TITLE;
-}
+#line 22 "tex-to-md.l"
+{ return _END; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 41 "tex-to-md.l"
-{
-    return AUTHOR;
-}
+#line 23 "tex-to-md.l"
+{ return IT; } /*italic*/
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 45 "tex-to-md.l"
-{
-    return CHAPTER;
-}
+#line 24 "tex-to-md.l"
+{ return PAR;} /* Nparagraph */
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 49 "tex-to-md.l"
-{
-    return SECTION;
-}
+#line 25 "tex-to-md.l"
+{ return SECTION; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 53 "tex-to-md.l"
-{
-    return SUBSECTION;
-}
+#line 26 "tex-to-md.l"
+{ return SUBSECTION; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 57 "tex-to-md.l"
-{
-    return PAR;
-}
+#line 27 "tex-to-md.l"
+{ return TITLE; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 61 "tex-to-md.l"
-{
-    return BF;
-}
+#line 28 "tex-to-md.l"
+{ return UNDERLINE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 65 "tex-to-md.l"
-{
-    return UNDERLINE;
-}
+#line 29 "tex-to-md.l"
+{ return PACKAGE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 69 "tex-to-md.l"
-{
-    return IT;
-}
+#line 31 "tex-to-md.l"
+{ return DOCUMENT; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 74 "tex-to-md.l"
+#line 32 "tex-to-md.l"
+{ return ENUMERATE; }
+	YY_BREAK
+case 17:
+YY_RULE_SETUP
+#line 33 "tex-to-md.l"
+{ return ITEMIZE; }
+	YY_BREAK
+case 18:
+YY_RULE_SETUP
+#line 35 "tex-to-md.l"
 {
     //! HUMM Make this better
     copyStr(&yylval.string, &yytext[6], false);
     return ITEM;
 }
 	YY_BREAK
-case 17:
-YY_RULE_SETUP
-#line 80 "tex-to-md.l"
-{
-    return ENUMERATE;
-}
-	YY_BREAK
-case 18:
-YY_RULE_SETUP
-#line 84 "tex-to-md.l"
-{
-    return ITEMIZE;
-}
-	YY_BREAK
 case 19:
 /* rule 19 can match eol */
 YY_RULE_SETUP
-#line 90 "tex-to-md.l"
+#line 42 "tex-to-md.l"
 {
     copyStr(&yylval.string, yytext, true);
     return NAME;
@@ -991,7 +959,7 @@ YY_RULE_SETUP
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 95 "tex-to-md.l"
+#line 47 "tex-to-md.l"
 {
     copyStr(&yylval.string, yytext, true);
     return CONTENT;
@@ -1000,7 +968,7 @@ YY_RULE_SETUP
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 100 "tex-to-md.l"
+#line 52 "tex-to-md.l"
 {
     copyStr(&yylval.string, yytext, true);
     return NAME;
@@ -1008,7 +976,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 107 "tex-to-md.l"
+#line 57 "tex-to-md.l"
 {
     copyStr(&yylval.string, yytext, false);
     return NAME;
@@ -1017,24 +985,20 @@ YY_RULE_SETUP
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 112 "tex-to-md.l"
-{
-
-}
+#line 62 "tex-to-md.l"
+{}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 116 "tex-to-md.l"
-{
-    printf("Caracter não reconhecido %c\n", *yytext);
-}
+#line 64 "tex-to-md.l"
+{ printf("Unknown character %c at %d \n", *yytext, yylineno); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 120 "tex-to-md.l"
+#line 66 "tex-to-md.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1038 "tex-to-md.lex.c"
+#line 1002 "tex-to-md.lex.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2051,5 +2015,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 120 "tex-to-md.l"
+#line 66 "tex-to-md.l"
 

@@ -4,87 +4,39 @@
     #include "tex-to-md.tab.h"    
 %}
 
-letter [a-zA-Z]
-word letter+
-digit [0-9]
-number [0-9]+
-space " " 
+letter  [a-zA-Z]
+word    letter+
+digit   [0-9]
+number  [0-9]+
+space   " " 
 
 %%
 
 "%".* /* Ignore comments */
 
-\\begin {
-    return _BEGIN;
-}
+\\author { return AUTHOR; }
+\\begin { return _BEGIN; }
+\\bf { return BF; } /*bold*/
+\\chapter { return CHAPTER; }
+\\documentclass { return CLASS; }
+\\end { return _END; }
+\\it { return IT; } /*italic*/
+\\par { return PAR;} /* Nparagraph */
+\\section { return SECTION; }
+\\subsection { return SUBSECTION; }
+\\title { return TITLE; }
+\\underline { return UNDERLINE; }
+\\usepackage { return PACKAGE; }
 
-\\end {
-    return _END;
-}
-
-"{"document"}" {
-    return DOCUMENT;
-}
-
-\\documentclass {
-    return CLASS;
-}
-
-\\usepackage {
-    return PACKAGE;
-}
-
-\\title {
-    return TITLE;
-}
-
-\\author {
-    return AUTHOR;
-}
-
-\\chapter {
-    return CHAPTER;
-}
-
-\\section {
-    return SECTION;
-}
-
-\\subsection {
-    return SUBSECTION;
-}
-
-\\par {
-    return PAR;
-}
-
-\\bf {
-    return BF;
-}
-
-\\underline {
-    return UNDERLINE;
-}
-
-\\it {
-    return IT;
-}
-
+"{"document"}" { return DOCUMENT; }
+"{"enumerate"}" { return ENUMERATE; }
+"{"itemize"}" { return ITEMIZE; }
 
 \\item" "["" "a-zA-Z0-9"\\"\.@\-"<"">""("")"","\''"!""?"";"":"]+ {
     //! HUMM Make this better
     copyStr(&yylval.string, &yytext[6], false);
     return ITEM;
 }
-
-"{"enumerate"}" {
-    return ENUMERATE;
-}
-
-"{"itemize"}" {
-    return ITEMIZE;
-}
-
 
 
 "{"[a-zA-Z0-9"\\"\.@\n\-"<"">""("")"","\''"!""?"";"":"]+"}" {
@@ -102,19 +54,13 @@ space " "
     return NAME;
 }
 
-
-
 [a-zA-Z0-9\.@\-"<"">""("")"","\''"!""?"";"":"]+ {
     copyStr(&yylval.string, yytext, false);
     return NAME;
 }
 
-\t|\n|{space} {
+\t|\n|{space} {}
 
-}
-
-. {
-    printf("Caracter não reconhecido %c\n", *yytext);
-}
+. { printf("Unknown character %c at %d \n", *yytext, yylineno); }
 
 %%
