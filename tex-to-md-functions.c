@@ -39,10 +39,10 @@ void evalAST(ASTNode* a) {
     evalAST(a->n1);
     evalAST(a->n2);
     break;
-  case NT_CLASS:;
-    Class* class = (Class*)a;
-
+  case NT_CLASS:
     fputs("[//]: # \"", outFilePtr);
+
+    Class* class = (Class*)a;
 
     fputs("\\documentclass[", outFilePtr);
     fputs(class->content1, outFilePtr);
@@ -57,10 +57,10 @@ void evalAST(ASTNode* a) {
     fputs("\n\n", outFilePtr);
 
     break;
-  case NT_PACKAGE:;
-    Package* package = (Package*)a;
-
+  case NT_PACKAGE:
     fputs("[//]: # \"\n", outFilePtr);
+
+    Package* package = (Package*)a;
 
     while (package != NULL) {
 
@@ -84,10 +84,11 @@ void evalAST(ASTNode* a) {
 
     break;
 
-  case NT_IDENTIFICATION:;
+  case NT_IDENTIFICATION:
+    fputs("# ", outFilePtr);
+
     Identification* id = (Identification*)a;
 
-    fputs("# ", outFilePtr);
     fputs(id->title, outFilePtr);
     fputs("\n\n", outFilePtr);
 
@@ -110,11 +111,10 @@ void evalAST(ASTNode* a) {
 
     break;
 
-  case NT_CHAPTER:;
-    struct TextSubdivision* chap = (struct TextSubdivision*)a;
-
+  case NT_CHAPTER:
     currSection = 1;
     currSubSection = 1;
+    struct TextSubdivision* chap = (struct TextSubdivision*)a;
 
     fputs("## ", outFilePtr);
     fputs(chap->content, outFilePtr);
@@ -124,10 +124,10 @@ void evalAST(ASTNode* a) {
     currChapter++;
 
     break;
-  case NT_SECTION:;
-    struct TextSubdivision* sec = (struct TextSubdivision*)a;
-
+  case NT_SECTION:
     currSubSection = 1;
+
+    struct TextSubdivision* sec = (struct TextSubdivision*)a;
 
     fputs("\n#### **", outFilePtr);
     fputs(numberToStr(currChapter), outFilePtr);
@@ -141,10 +141,10 @@ void evalAST(ASTNode* a) {
     currSection++;
 
     break;
-  case NT_SUBSECTION:;
+  case NT_SUBSECTION:
+    fputs("\n##### **", outFilePtr);
     struct TextSubdivision* subsec = (struct TextSubdivision*)a;
 
-    fputs("\n##### **", outFilePtr);
     fputs(numberToStr(currChapter), outFilePtr);
     fputs(".", outFilePtr);
     fputs(numberToStr(currSection), outFilePtr);
@@ -425,7 +425,6 @@ ASTNode* newAST(NodeType nodeType, ASTNode* n1, ASTNode* n2, ASTNode* n3, ASTNod
 
 ASTNode* newClass(NodeType nodeType, char* content1, char* content2) {
   Class* a = malloc(sizeof(Class));
-
 
   if (!a) {
     printf("Error: memory allocation returned NULL pointer\n");
