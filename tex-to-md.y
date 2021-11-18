@@ -1,6 +1,4 @@
 %{
-    #include <stdio.h>
-    #include <stdlib.h>
     #include "tex-to-md.h"
 %}
 
@@ -108,5 +106,5 @@ itemList: _BEGIN ITEMIZE itens _END ITEMIZE { $$ = newAST(NT_ITEMLIST, $3, NULL,
 ;
 
 itens: ITEM { $$ = newItems(NT_ITENS, $1, NULL); } 
-| ITEM itens { $$ = newItems(NT_ITENS, $1, $2);}
+| ITEM itens { $$ = newItems(NT_ITENS, $1, $2); }
 ;
