@@ -100,12 +100,12 @@ void evalAST(ASTNode* a) {
     break;
 
   case NT_MAIN:
-    evalAST(a->n3); /* evalAST bodyList */
+    evalAST(a->n3);
     break;
 
   case NT_BODYLIST:
     evalAST(a->n1);
-    if (a->n2) /* se tem pelo menos o nó 2, tem todos os 4 */
+    if (a->n2)
       evalAST(a->n2);
 
     break;
