@@ -92,7 +92,6 @@ void evalAST(ASTNode* a) {
     fputs("\n\n", outFilePtr);
 
     if (id->author) {
-      fputs("\t", outFilePtr);
       fputs(id->author, outFilePtr);
       fputs("\n\n", outFilePtr);
       fputs("\n\n", outFilePtr);
@@ -130,7 +129,7 @@ void evalAST(ASTNode* a) {
 
     currSubSection = 1;
 
-    fputs("#### **", outFilePtr);
+    fputs("\n#### **", outFilePtr);
     fputs(numberToStr(currChapter), outFilePtr);
     fputs(".", outFilePtr);
     fputs(numberToStr(currSection), outFilePtr);
@@ -145,7 +144,7 @@ void evalAST(ASTNode* a) {
   case NT_SUBSECTION:;
     struct TextSubdivision* subsec = (struct TextSubdivision*)a;
 
-    fputs("##### **", outFilePtr);
+    fputs("\n##### **", outFilePtr);
     fputs(numberToStr(currChapter), outFilePtr);
     fputs(".", outFilePtr);
     fputs(numberToStr(currSection), outFilePtr);
