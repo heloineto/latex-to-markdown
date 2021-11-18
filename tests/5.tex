@@ -1,81 +1,42 @@
-%Tudo que começa com '%' é comentário e é ignorado pelo compilador
+% After typing in the commands to LaTeX (which are the instructions preceded by
+% the backslash character) and the text of a sample paper, save them in a file
+% with a name ending in .tex, like paper.tex. You can then type latex paper.tex
+% and the typesetting program will run on your file of commands, producing a file
+% ending in .dvi, which is the file that can be sent to a laserprinter (like valkyr,
+% in Margaret Jacks Hall). (If there are any errors in your file of commands,
+% you will be given a message which is usually impossible to interpret. Typical
+% errors involve forgetting the right number of closing brackets or delimiters
+% like & in example sentences. When LaTeX gives an error message and then asks
+% what to do, possible options are to type x to quit and try to find the error
+% in the emacs file, or press <RETURN> to try to continue and find the error by
+% looking at the output document.) To print the file, you type lpr -Pvalkyr
 
-%Gerando arquivo em latex:
-%latex arquivo.tex (em dvi)
-%pdflatex arquivo (em pdf)
-%dvipdfm arquivo
-%s2pdf arquivo
+\documentclass[12pt]{article}
+\usepackage{lingmacros}
+\usepackage{tree-dvips}
 
-% Alguns modos de usar o latex:
-% Windows – Miktex com Led
-% Linux – texlive com kile
+\title{Esse eh o ultimo}
+\author{bem interessante}
 
-\documentclass[12pt]{article} %aqui fala o tipo de documento e o tamanho da fonte. Opções: tamanho do texto (10pt, 12pt, 14pt), formato do papel (a4paper, a5paper, b5paper, letterpaper, legalpaper, executivepaper), o número de colunas (onecolumn, twocolumn), entre outras opções.
-%Por exemplo, [12pt,a4,twocolumn].
-%classe: article, report, letter, book ou slides. Instalar abnt para quem está pensando no tf
-\usepackage[brazil]{babel} %hifenização em português do brasil
-\usepackage[T1]{fontenc} % caracteres com acentos são considerados um bloco só
-\usepackage{ae} %arruma a fonte quando usa o pacote acima
-\usepackage[cp1252]{inputenc} %Encoding do windows, com caracteres acentuados
-\usepackage{amssymb} %alguns caracteres matemáticos especiais
-\usepackage[pdftex]{graphicx}%Para inserir figuras
+\begin{document}
+\maketitle
+\chapter{Notes for My Paper}
 
-\title{Exemplo de \LaTeX} % título
-\author{Viviane Teles de Lucca Maranhao \\ viviane@ime.usp.br} % quem escreveu
+\section{Notes for My Paper}
 
-\begin{document} % Aqui começa o documento
-\chapter{Paises lusofonos}
-\section{Portugal}
-\section{Angola}
-\section{Macau}
-fim de paragrafo\par
-\chapter{Palavroes}
-babana1
-selvageria
-balburdia
-\section{proibicao dos palavroes no Brasil}
-Veja no fim do capitulo\par
-\bf{negro pequeno (negrito)} Los Hermanos 
-\underline{rata blanca} \it{italia}\par
-\subsection{seu madruga}
-\subsection{chaves}
-mas soh podia ser o Chaves 
-\bf{de novo!}\par
-\chapter{Favelas no Brasil}
-\section{o inicio}
-\bf{ratos invadem australia} rata blanca melhor banda da america latina ?? 
-\underline{rata blanca} \it{italia}\par
-\subsection{seu}
-\section{pay attention}
-\bf{cavalo juan}  aiaiaiaiaiai 
-\underline{rata blanca} \it{China KKKKKKKKKKKK}\par
-\subsection{seu}
-\chapter{nao quero falar com bandeirantes}
-\section{pay attention}
-\bf{negrito} we don't need no education\par 
-\underline{los hermanos} \it{los polos hermanos}\par
-\subsection{seu madruga: eu nAo gosto de ser elogiado em publico !!!!!!!}
-\subsection{prof girafa: eu NAO terminei ainda!!!}
-cringe KKKKKKKKKKKKKKKKKKKKKKK\par
-\chapter{harry potter eh melhor que senhor dozaneis}
-\section{pay attention}
-\bf{neguinho essa frase vai estar} beatles satanico ? entenda o caso 
-\underline{rata blanca} \it{me gusta tu}\par
-\section{pay attention}
-\begin{itemize} 
-\item aranha 
-\item macaco
-\item macaco aranha
-\end{itemize}
-\begin{enumerate} 
-\item 1958
-\item 1962
-\item 1970
-\item 1982 (?)
-\item 1994
-\item 2002
-\end{enumerate}
-i have become comfortably numb
-i have become comfortably numb \bf{i have become comfortably numb}
-i have become comfortably numb \par
+Don't forget to include examples of topicalization.
+They look like this:
+
+\subsection{How to handle topicalization}
+
+I'll just assume a tree structure like.
+
+\subsection{Mood}
+
+Mood changes when there is a topic, as well as when
+there is WH-movement.  is the mood when
+there is a non-subject topic or WH-phrase in Comp.
+is the mood when there is a subject topic
+or WH-phrase.
+
 \end{document}
