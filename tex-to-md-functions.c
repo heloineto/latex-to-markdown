@@ -206,7 +206,6 @@ void evalAST(ASTNode* a) {
 
   case NT_LIST:
     evalAST(a->n1);
-
     break;
 
   case NT_NUMBEREDLIST:;
@@ -220,7 +219,6 @@ void evalAST(ASTNode* a) {
     }
 
     fputs("\n\n", outFilePtr);
-
     break;
 
   case NT_ITEMLIST:;
@@ -234,13 +232,14 @@ void evalAST(ASTNode* a) {
     }
 
     fputs("\n\n", outFilePtr);
-
     break;
+
   case NT_ITENS:
     break;
 
   default:
-    printf("erro interno: bad node %d\n", a->nodeType);
+    printf("Erro: Unknown node type on node %d\n", a->nodeType);
+    break;
   }
 }
 

@@ -14,19 +14,19 @@ characters {digit}|{letter}|{special_chars}
 
 "%".* /* Ignore comments */
 
-\\author { return AUTHOR; } 
+\\author { return AUTOR; } 
 \\begin { return _BEGIN; }
 \\bf|\\textbf { return BF; }
 \\chapter { return CHAPTER; }
-\\documentclass { return CLASS; }
+\\documentclass { return CLASSE; }
 \\end { return _END; }
 \\it|\\textit { return IT; }
 \\par { return PAR;}
 \\section { return SECTION; }
 \\subsection { return SUBSECTION; }
-\\title { return TITLE; }
+\\title { return TITULO; }
 \\underline { return UNDERLINE; }
-\\usepackage { return PACKAGE; }
+\\usepackage { return PACOTE; }
 \\newline|\\\\ { return NEWLINE; }
 
 "{"document"}" { return DOCUMENT; }
@@ -40,17 +40,17 @@ characters {digit}|{letter}|{special_chars}
 
 ("{"|"[")(["\\"\n]|{characters})+("}"|"]") {
     copyStr(&yylval.string, yytext, true);
-    return NAME;
+    return NOME;
 }
 
 "{"([" ""\\"\n]|{characters})+"}" {
     copyStr(&yylval.string, yytext, true);
-    return CONTENT;
+    return CONTEUDO;
 }
 
 {characters}+ {
     copyStr(&yylval.string, yytext, false);
-    return NAME;
+    return NOME;
 }
 
 \t|\n|{space}|\\maketitle {}
